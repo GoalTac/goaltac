@@ -1,12 +1,11 @@
+import { useRouter } from "next/router";
 import { type ReactElement } from "react";
 import { MainLayout } from "~/components/layouts/main-layout";
 
-import { api } from "~/utils/api";
-
 export default function HomePage() {
-  const hello = api.post.hello.useQuery({ text: "from tRPC" });
+  const { query } = useRouter()
 
-  return <div className="flex justify-center gap-8 py-6">Landing page</div>;
+  return <div className="flex gap-8 justify-center py-6">User id: {query.id}</div>;
 }
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
