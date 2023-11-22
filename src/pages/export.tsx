@@ -6,7 +6,7 @@ import { api } from "~/utils/api";
 export default function HomePage() {
   const hello = api.post.hello.useQuery({ text: "from tRPC" });
 
-  return <div className="flex justify-center gap-8 py-6">Landing page</div>;
+  return <div className="flex justify-center gap-8 py-6">Export</div>;
 }
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
