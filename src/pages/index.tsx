@@ -4,7 +4,6 @@ import Image from "next/image";
 import { api } from "~/utils/api";
 
 export default function Landing() {
-  const hello = api.post.hello.useQuery({ text: "from tRPC" });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[url('/bubble_background.svg')]">
