@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { supabase } from "~/utils/supabaseClient";
+import { useSession, useSupabaseClient } from "~/utils/sessionProvider";
 
 export const authRouter = createTRPCRouter({
   signUpEmail: publicProcedure
@@ -29,7 +30,8 @@ export const authRouter = createTRPCRouter({
         if(error) {
             throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
         }
-        
+        console.log(data, error)
+
         return { data, error };
     }),
     signOut: publicProcedure
@@ -41,7 +43,14 @@ export const authRouter = createTRPCRouter({
     getSession: publicProcedure
     .input(z.object({  }))
     .query(async({  }) => {
-        const {data, error } = await supabase.auth.getSession()
-        return {data, error};
+        const { session: session } = useSession();
+        console.log(session)
+        return session;
+    }),
+    getUser: publicProcedure
+    .input(z.object({  }))
+    .query(async({  }) => {
+        const { user: user } = useSession();
+        return user;
     }),
 });

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
+import { api } from "~/utils/api";
 import NavLink from "./nav-link";
 import { Avatar } from "./ui/avatar";
 import {
@@ -21,6 +21,7 @@ import { Button } from "./ui/button";
 import { cn } from "~/utils";
 import { ThemeToggle } from "./theme-toggle";
 import { useSession } from "@supabase/auth-helpers-react";
+import { useToast } from "./ui/use-toast";
 
 const navItems = [
   {
@@ -84,7 +85,10 @@ export function MainNavigation({
 }) {
   const { pathname, push } = useRouter();
   const session = useSession();
-
+  const { toast } = useToast();
+  const router = useRouter();
+  const signOutMutation = api.auth.signOut.useMutation()
+  
   console.log(session);
   // useEffect(() => {
   //   if (!session) void push("/");
@@ -155,7 +159,24 @@ export function MainNavigation({
             Settings
           </span>
         </Button>
-        <Button
+        <Button onClick={()=>{
+          signOutMutation.mutate({
+            onSuccess: () => {
+              toast({
+                duration: 3000,
+                variant: "success",
+                description: "Logging out now...",
+              });
+              void router.push("/");
+            },
+            onError: (error: any) =>
+              toast({
+                duration: 6000,
+                variant: "destructive",
+                description: error.message,
+              }),
+          });
+        }}
           variant={"ghost"}
           className={cn("flex w-fit items-center gap-2 text-red-500", {
             "justify-center": !isExpanded,
