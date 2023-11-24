@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import NavLink from "./nav-link";
@@ -20,6 +20,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { cn } from "~/utils";
 import { ThemeToggle } from "./theme-toggle";
+import { useSession } from "@supabase/auth-helpers-react";
 
 const navItems = [
   {
@@ -62,7 +63,7 @@ const CloseButton = ({
   isExpanded: boolean;
 }) => {
   return (
-    <div className="text-brand-black absolute -right-2 top-[33px] z-20 flex h-5 w-5 items-center justify-center rounded-md bg-slate-200">
+    <div className="absolute -right-2 top-[33px] z-20 flex h-5 w-5 items-center justify-center rounded-md bg-slate-200 text-brand-black">
       <button onClick={toggleExpanded}>
         {isExpanded ? (
           <ChevronLeft strokeWidth={1} />
@@ -81,7 +82,15 @@ export function MainNavigation({
   isExpanded: boolean;
   toggleExpanded: () => void;
 }) {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
+  const session = useSession();
+
+  console.log(session);
+  // useEffect(() => {
+  //   if (!session) void push("/");
+  // }, [session, push]);
+
+  // if (!session) return <>loading...</>;
 
   return (
     <div
@@ -128,7 +137,7 @@ export function MainNavigation({
           ))}
         </div>
       </div>
-      <div className="text-brand-black flex flex-col gap-0">
+      <div className="flex flex-col gap-0 text-brand-black">
         <Avatar />
         <ThemeToggle />
         <Button
