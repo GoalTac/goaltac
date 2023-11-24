@@ -3,7 +3,6 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { supabase } from "~/utils/supabaseClient";
-import { useSession, useSupabaseClient } from "~/utils/sessionProvider";
 
 export const authRouter = createTRPCRouter({
   signUpEmail: publicProcedure
@@ -18,6 +17,9 @@ export const authRouter = createTRPCRouter({
             }
         })
         const userExists = data?.user?.identities?.length == 0
+  
+        if(data.session)
+        await supabase.auth.setSession(data.session)
 
         return { data, error, userExists };
     }),
@@ -30,27 +32,19 @@ export const authRouter = createTRPCRouter({
         if(error) {
             throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
         }
-        console.log(data, error)
+
+        await supabase.auth.setSession(data.session)
 
         return { data, error };
     }),
     signOut: publicProcedure
-    .input(z.object({  }))
-    .mutation(async({  }) => {
+    .mutation(async() => {
         const { error } = await supabase.auth.signOut()
-        return error;
-    }),
-    getSession: publicProcedure
-    .input(z.object({  }))
-    .query(async({  }) => {
-        const { session: session } = useSession();
-        console.log(session)
-        return session;
-    }),
-    getUser: publicProcedure
-    .input(z.object({  }))
-    .query(async({  }) => {
-        const { user: user } = useSession();
-        return user;
+
+        if(error) {
+            throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+        }
+
+        return true;
     }),
 });

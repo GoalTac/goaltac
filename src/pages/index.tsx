@@ -14,6 +14,7 @@ export default function Landing() {
             src="/name_logo.png"
             width={400}
             height={400}
+            className="h-auto w-auto"
             alt="GoalTac Logo"
           />
         </h1>

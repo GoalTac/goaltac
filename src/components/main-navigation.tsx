@@ -20,8 +20,9 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { cn } from "~/utils";
 import { ThemeToggle } from "./theme-toggle";
-import { useSession } from "@supabase/auth-helpers-react";
+
 import { useToast } from "./ui/use-toast";
+import { useSession } from "~/utils/sessionProvider";
 
 const navItems = [
   {
@@ -84,17 +85,31 @@ export function MainNavigation({
   toggleExpanded: () => void;
 }) {
   const { pathname, push } = useRouter();
-  const session = useSession();
+  const { session } = useSession();
   const { toast } = useToast();
   const router = useRouter();
-  const signOutMutation = api.auth.signOut.useMutation()
-  
-  console.log(session);
-  // useEffect(() => {
-  //   if (!session) void push("/");
-  // }, [session, push]);
+  const signOutMutation = api.auth.signOut.useMutation({
+    onSuccess: () => {
+      toast({
+        duration: 3000,
+        variant: "success",
+        description: "Logging out now...",
+      });
+      void router.push("/");
+    },
+    onError: (error) =>
+      toast({
+        duration: 6000,
+        variant: "destructive",
+        description: error.message,
+      }),
+  });
 
-  // if (!session) return <>loading...</>;
+  useEffect(() => {
+    if (!session) void push("/");
+  }, [session, push]);
+
+  if (!session) return <>loading...</>;
 
   return (
     <div
@@ -159,24 +174,10 @@ export function MainNavigation({
             Settings
           </span>
         </Button>
-        <Button onClick={()=>{
-          signOutMutation.mutate({
-            onSuccess: () => {
-              toast({
-                duration: 3000,
-                variant: "success",
-                description: "Logging out now...",
-              });
-              void router.push("/");
-            },
-            onError: (error: any) =>
-              toast({
-                duration: 6000,
-                variant: "destructive",
-                description: error.message,
-              }),
-          });
-        }}
+        <Button
+          onClick={() => {
+            signOutMutation.mutate();
+          }}
           variant={"ghost"}
           className={cn("flex w-fit items-center gap-2 text-red-500", {
             "justify-center": !isExpanded,
