@@ -13,7 +13,6 @@ import {
 } from "@supabase/auth-helpers-nextjs";
 import { Toaster } from "../components/ui/toaster";
 import { type Database } from "~/types/supabase";
-import SupabaseProvider from "~/components/providers/supabase-provider";
 import {
   SessionContextProvider,
   useSession,
@@ -42,8 +41,6 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
   const [supabaseClient] = useState(() => createPagesBrowserClient());
 
   const test = api.auth.getSession.useQuery({});
-
-  console.log(test);
 
   const { isLoading, session, error } = useSessionContext();
 
