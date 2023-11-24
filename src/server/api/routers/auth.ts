@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -25,6 +26,10 @@ export const authRouter = createTRPCRouter({
     .mutation(async({ input }) => {
         const { data, error } = await supabase.auth.signInWithPassword(input)
 
+        if(error) {
+            throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+        }
+        
         return { data, error };
     }),
     signOut: publicProcedure
