@@ -1,52 +1,44 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
-/**
- * Need to finish the email router stuff
- */
-let example = {
-  id: 1,
-  name: "Hello World",
-};
+import {supabase} from '../../../utils/supabaseClient'
 
-export const emailRouter = createTRPCRouter({
-  sendForgotPassword: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+
+export const authRouter = createTRPCRouter({
+  sign_up_email: publicProcedure
+    .input(z.object({ email: z.string(), password: z.string(), }))
+    .mutation(async({ input }) => {
+        console.log(input.email,input.password)
+
+        const { data, error } = await supabase.auth.signUp({
+            email: input.email,
+            password: input.password,
+            options: {
+                emailRedirectTo: 'https://localhost:3000/dashboard'
+            }
+        })
+        const userExists = data?.user?.identities?.length == 0
+        console.log(data,error)
+        return { data, error, userExists };
     }),
 
-  sendWelcome: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+    sign_in_email: publicProcedure
+    .input(z.object({ email: z.string(), password: z.string(), }))
+    .mutation(async({ input }) => {
+        console.log(input.email,input.password)
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: input.email,
+            password: input.password,
+        })
+        console.log(data,error)
+        return { data, error };
     }),
   
-  sendVerification: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  sign_out: publicProcedure
+    .input(z.object({  }))
+    .mutation(async({  }) => {
+        const { error } = await supabase.auth.signOut()
+        return error;
     }),
-
-  create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ input }) => {
-      // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      example = { id: example.id + 1, name: input.name };
-      return example;
-    }),
-
-  getLatest: publicProcedure.query(() => {
-    return example;
-  }),
 });

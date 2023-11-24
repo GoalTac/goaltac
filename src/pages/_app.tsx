@@ -9,6 +9,7 @@ import { type NextPage } from "next";
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
+import { Toaster } from "../components/ui/toaster"
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -32,6 +33,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         enableSystem
         disableTransitionOnChange>
         {getLayout(<Component {...pageProps} />)}
+        <Toaster/>
       </ThemeProvider>
     </SessionContextProvider>
   );
