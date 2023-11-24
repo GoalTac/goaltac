@@ -1,15 +1,9 @@
-import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
 import { cn } from "../utils"
 import { buttonVariants } from "../components/ui/button"
-import { UserAuthForm } from "../components/UserAuthForm"
-
-export const metadata: Metadata = {
-  title: "Sign Up",
-  description: "Sign up to use GoalTac.",
-}
+import { UserAuthForm } from "../components/SignUpForm"
 
 export default function AuthenticationPage() {
   return (
@@ -18,7 +12,7 @@ export default function AuthenticationPage() {
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-[url('/Network.png')] blur-sm" />
           <div className="relative z-20 flex items-center text-5xl text-white/80 font-medium">
-            <Image src="/icon_logo.png" width={80} height={80} alt="GoalTac Logo"/>
+            <Image src="/icon_logo.png" width={80} height={100} alt="GoalTac Logo"/>
           </div>
 
           <div className="relative z-20 mt-auto text-black">
