@@ -44,8 +44,9 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "tailwind.config.mjs"
-, "src/utils/supabaseClient.js"  ],
+    "tailwind.config.mjs",
+    "src/utils/supabaseClient.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
