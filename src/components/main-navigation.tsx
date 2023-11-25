@@ -22,6 +22,7 @@ import { cn } from "~/utils";
 import { ThemeToggle } from "./theme-toggle";
 
 import { useToast } from "./ui/use-toast";
+import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 const navItems = [
   {
@@ -84,10 +85,41 @@ export function MainNavigation({
   toggleExpanded: () => void;
 }) {
   const { pathname, push } = useRouter();
-  const session = api.auth.getSession.useQuery().data?.data.session;
+  const supabase = useSupabaseClient()
+  const session = useSession();
+  const user = useUser()
+
   const { toast } = useToast();
   const router = useRouter();
+
+  //sign the user out
+  async function onSignOut() {
+    async function signOut() {
+      const { error } = await supabase.auth.signOut()
+
+      if(error) {
+        toast({
+          duration: 6000,
+          variant: "destructive",
+          description: error.message,
+        })
+        throw new Error(error.message)
+      } else {
+        toast({
+          duration: 3000,
+          variant: "success",
+          description: "Logging out now...",
+        });
+        void router.push('/')
+      }
+
+      return { error };
+    }
+    const process = await signOut()
+  }
+  /*
   const signOutMutation = api.auth.signOut.useMutation({
+    
     onSuccess: () => {
       toast({
         duration: 3000,
@@ -102,13 +134,11 @@ export function MainNavigation({
         variant: "destructive",
         description: error.message,
       }),
-  });
-  console.log(session)
-  
+  });*/
   
   useEffect(() => {
     if (!session) {
-      void push("/");
+      void router.push("/");
     }
   }, [session, push]);
 
@@ -178,9 +208,7 @@ export function MainNavigation({
           </span>
         </Button>
         <Button
-          onClick={() => {
-            signOutMutation.mutate();
-          }}
+          onClick={onSignOut}
           variant={"ghost"}
           className={cn("flex w-fit items-center gap-2 text-red-500", {
             "justify-center": !isExpanded,
