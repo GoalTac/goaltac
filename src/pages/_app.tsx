@@ -16,7 +16,6 @@ import { Toaster } from "../components/ui/toaster";
 import { type Database } from "~/types/supabase";
 import Script from "next/script";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import { supabase } from "~/utils/supabaseClient";
 
 export type TypedSupabaseClient = SupabaseClient<Database>;
 
@@ -34,6 +33,7 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
   pageProps,
 }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page);
+  const [supabase] = useState(() => createPagesBrowserClient())
 
   return (
     <>
@@ -50,8 +50,7 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
     
     <SessionContextProvider
       supabaseClient={supabase}
-      initialSession={pageProps.initialSession}
-    >
+      initialSession={pageProps.initialSession}>
       <ThemeProvider
         attribute="class"
         defaultTheme="light"
