@@ -16,7 +16,16 @@ export const authRouter = createTRPCRouter({
                 emailRedirectTo: 'https://localhost:3000/dashboard'
             }
         })
+
+        if(error) {
+            throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+        }
+
         const userExists = data?.user?.identities?.length == 0
+
+        if (userExists) {
+            throw new TRPCError({code: 'UNAUTHORIZED', message: "The email is already in use."})
+        }
   
         if(data.session)
         await supabase.auth.setSession(data.session)
