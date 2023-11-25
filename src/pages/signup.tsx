@@ -8,7 +8,7 @@ export default function AuthenticationPage() {
     <section className="bg-[url('/bubble_background.svg')] dark:bg-gray-900">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <a
-          href="#"
+          href="/"
           className="mb-6 flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <Image width={100} height={100} src="/icon_logo.png" alt="logo" />

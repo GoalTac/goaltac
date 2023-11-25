@@ -104,12 +104,15 @@ export function MainNavigation({
         description: error.message,
       }),
   });
-
+  //removed temporarily so I can work with dashboard
+/*
   useEffect(() => {
-    if (!session) void push("/");
+    if (!session) {
+      void push("/");
+    }
   }, [session, push]);
 
-  if (!session) return <>loading...</>;
+  if (!session) return <>loading...</>;*/
 
   return (
     <div

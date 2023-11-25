@@ -13,6 +13,7 @@ import {
 import { Toaster } from "../components/ui/toaster";
 import { type Database } from "~/types/supabase";
 import { SessionProvider } from "~/utils/sessionProvider";
+import Script from "next/script";
 
 export type TypedSupabaseClient = SupabaseClient<Database>;
 
@@ -33,6 +34,18 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
+    <>
+    <Script strategy="lazyOnload"
+      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}/>
+
+    <Script strategy="lazyOnload">
+      {`window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+        page_path: window.location.pathname,
+        });`}</Script>
+    
     <SessionProvider>
       <ThemeProvider
         attribute="class"
@@ -43,7 +56,7 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
         {getLayout(<Component {...pageProps} />)}
         <Toaster />
       </ThemeProvider>
-    </SessionProvider>
+    </SessionProvider></>
   );
 };
 
