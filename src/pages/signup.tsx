@@ -1,9 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { SignUpForm } from "~/components/sign-up-form";
+import { SignUpSuccess } from "~/components/sign-up-success";
 
 export default function AuthenticationPage() {
+  const [ submitted, setSubmitted ] = useState<string>('')
+
   return (
     <section className="bg-[url('/bubble_background.svg')] dark:bg-gray-900">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
@@ -26,7 +30,7 @@ export default function AuthenticationPage() {
                 Login here!
               </Link>
             </p>
-            <SignUpForm />
+            {submitted ? <SignUpSuccess submitted={submitted}/> : <SignUpForm setSubmitted={setSubmitted} />}
           </div>
         </div>
       </div>

@@ -18,15 +18,18 @@ import {
 } from "./ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
 
-export function SignUpForm() {
+export function SignUpForm({ setSubmitted }: any) {
   const { toast } = useToast();
   const router = useRouter();
+  const supabase = useSupabaseClient()
 
   const signUpEmailMutation = api.auth.signUpEmail.useMutation();
 
@@ -38,8 +41,54 @@ export function SignUpForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    signUpEmailMutation.mutate(data, {
+  async function onSubmit(formData: z.infer<typeof formSchema>) {
+    async function signUp() {
+      const { data, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+              emailRedirectTo: "http://localhost:3000/auth/callback"
+          }
+      })
+
+      if(error) {
+          throw new Error(error.message)
+      }
+
+      const userExists = data?.user?.identities?.length == 0
+
+      if (userExists) {
+          throw new Error('The email is already in use')
+      }
+
+      if(data.session) await supabase.auth.setSession(data.session)
+
+      return { data, error, userExists };
+    }
+
+    const process = await signUp()
+    
+    //this means the singup process was successful
+    if (process.data) {
+      form.reset();
+      toast({
+        variant: "success",
+        title: "One more thing...",
+        description:
+          "A verification email has been sent to your inbox. Please verify your account!",
+      });
+      setSubmitted(formData.email)
+    }
+
+    if (process.error) {
+      toast({
+        duration: 6000,
+        variant: "destructive",
+        description: process.error,
+      })
+    }
+    
+    /*signUpEmailMutation.mutate(data, {
       onSuccess: () => {
         form.reset();
         toast({
@@ -55,7 +104,7 @@ export function SignUpForm() {
           variant: "destructive",
           description: error.message,
         }),
-    });
+    });*/
   }
 
 
