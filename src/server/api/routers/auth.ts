@@ -1,3 +1,4 @@
+import { AuthError } from "@supabase/supabase-js";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -27,8 +28,7 @@ export const authRouter = createTRPCRouter({
             throw new TRPCError({code: 'UNAUTHORIZED', message: "The email is already in use."})
         }
   
-        if(data.session)
-        await supabase.auth.setSession(data.session)
+        if(data.session) await supabase.auth.setSession(data.session)
 
         return { data, error, userExists };
     }),
@@ -42,7 +42,25 @@ export const authRouter = createTRPCRouter({
             throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
         }
 
-        await supabase.auth.setSession(data.session)
+        return { data, error };
+    }),
+    getSession: publicProcedure
+    .query(async() => {
+        const { data, error } = await supabase.auth.getSession()
+
+        if(error) {
+            throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+        }
+
+        return { data, error };
+    }),
+    getUser: publicProcedure
+    .query(async() => {
+        const { data, error } = await supabase.auth.getUser()
+
+        if(error) {
+            throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+        }
 
         return { data, error };
     }),
@@ -51,9 +69,9 @@ export const authRouter = createTRPCRouter({
         const { error } = await supabase.auth.signOut()
 
         if(error) {
-            throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+            throw new AuthError(error.message)
         }
 
-        return true;
+        return error;
     }),
 });

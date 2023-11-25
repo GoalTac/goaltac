@@ -22,7 +22,6 @@ import { cn } from "~/utils";
 import { ThemeToggle } from "./theme-toggle";
 
 import { useToast } from "./ui/use-toast";
-import { useSession } from "~/utils/sessionProvider";
 
 const navItems = [
   {
@@ -85,7 +84,7 @@ export function MainNavigation({
   toggleExpanded: () => void;
 }) {
   const { pathname, push } = useRouter();
-  const { session } = useSession();
+  const session = api.auth.getSession.useQuery().data?.data.session;
   const { toast } = useToast();
   const router = useRouter();
   const signOutMutation = api.auth.signOut.useMutation({
@@ -104,15 +103,16 @@ export function MainNavigation({
         description: error.message,
       }),
   });
-  //removed temporarily so I can work with dashboard
-/*
+  console.log(session)
+  
+  
   useEffect(() => {
     if (!session) {
       void push("/");
     }
   }, [session, push]);
 
-  if (!session) return <>loading...</>;*/
+  if (!session) return <>loading...</>;
 
   return (
     <div

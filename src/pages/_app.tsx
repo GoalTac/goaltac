@@ -1,19 +1,22 @@
+"use client"
 import { type AppProps, type AppType } from "next/app";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import { ThemeProvider } from "~/components/theme-provider";
-import { type ReactElement, type ReactNode } from "react";
+import { useState, type ReactElement, type ReactNode, useEffect } from "react";
 import { type NextPage } from "next";
 import {
+  createPagesBrowserClient,
   type Session,
   type SupabaseClient,
 } from "@supabase/auth-helpers-nextjs";
 import { Toaster } from "../components/ui/toaster";
 import { type Database } from "~/types/supabase";
-import { SessionProvider } from "~/utils/sessionProvider";
 import Script from "next/script";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { supabase } from "~/utils/supabaseClient";
 
 export type TypedSupabaseClient = SupabaseClient<Database>;
 
@@ -26,7 +29,6 @@ type AppPropsWithLayout = AppProps<{
 }> & {
   Component: NextPageWithLayout;
 };
-
 const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
   Component,
   pageProps,
@@ -46,7 +48,10 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
         page_path: window.location.pathname,
         });`}</Script>
     
-    <SessionProvider>
+    <SessionContextProvider
+      supabaseClient={supabase}
+      initialSession={pageProps.initialSession}
+    >
       <ThemeProvider
         attribute="class"
         defaultTheme="light"
@@ -56,7 +61,7 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
         {getLayout(<Component {...pageProps} />)}
         <Toaster />
       </ThemeProvider>
-    </SessionProvider></>
+    </SessionContextProvider></>
   );
 };
 
