@@ -6,6 +6,9 @@ import { Button } from "~/components/ui/button";
 import { useRouter } from "next/router";
 import CountUp from "react-countup";
 import VisibilitySensor from "react-visibility-sensor";
+import Graph from "~/components/graph/graph";
+import data from "../components/graph/miserables";
+
 export default function Landing() {
 
   const router = useRouter()
@@ -76,11 +79,10 @@ export function Main() {
         </div>
       </div>
       <div className="container flex flex-col items-center justify-center py-8 mx-auto rounded-lg md:p-1 p-3">
-        <img
-          className="object-cover object-center w-full mb-10 border-gray-200 dark:border-gray-900 g327 border rounded-lg shadow-md"
-          alt="hero"
-          src="./images/placeholder.png"
-        ></img>
+      <Graph
+      width={720}
+      height={720}
+      graph={data} />
       </div>
       <section className="text-gray-600 body-font">
         <section className="text-gray-600 body-font">
