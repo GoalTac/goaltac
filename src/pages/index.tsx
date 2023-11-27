@@ -80,8 +80,8 @@ export function Main() {
       </div>
       <div className="container flex flex-col items-center justify-center py-8 mx-auto rounded-lg md:p-1 p-3">
       <Graph
-      width={720}
-      height={720}
+      width={1000}
+      height={1000}
       graph={data} />
       </div>
       <section className="text-gray-600 body-font">

@@ -22,7 +22,7 @@ export default class Graph extends React.Component<Props, {}> {
       }))
       .force("charge", d3.forceManyBody().strength(-100))
       .force("center", d3.forceCenter(this.props.width / 2, this.props.height / 2))
-      .nodes(this.props.graph.nodes);
+      .nodes(this.props.graph.nodes as d3.SimulationNodeDatum[]);
 
     this.simulation.force("link").links(this.props.graph.links);
   }
@@ -35,13 +35,13 @@ export default class Graph extends React.Component<Props, {}> {
     this.simulation.nodes(this.props.graph.nodes).on("tick", ticked);
 
     const { width, height } = this.props;
-    let zoom = d3.zoom().on('zoom', handleZoom).scaleExtent([1,5]).translateExtent([[0,0],[width,height]])
+    let zoom = d3.zoom<SVGSVGElement, unknown>().on('zoom', handleZoom).scaleExtent([1,5]).translateExtent([[0,0],[width,height]])
     
     function handleZoom(e: { transform: string | number | boolean | readonly (string | number)[] | d3.ValueFn<d3.BaseType, unknown, string | number | boolean | readonly (string | number)[] | null> | null; }) {
         d3.select('svg g').attr('transform', e.transform)
     }
 
-    d3.select('svg').call(zoom)
+    d3.select<SVGSVGElement, unknown>('svg').call(zoom)
 
     function ticked() {
       link

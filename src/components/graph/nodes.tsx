@@ -11,7 +11,7 @@ class Node extends React.Component<{ node: d3Types.d3Node, color: string }, {}> 
 
   render() {
     return (
-      <circle className="node" r={10} fill={this.props.color}
+      <circle className="node cursor-pointer" r={6} fill={this.props.color}
         ref={(ref: SVGCircleElement) => this.ref = ref}>
         <title>{this.props.node.id}</title>
       </circle>
@@ -22,7 +22,7 @@ class Node extends React.Component<{ node: d3Types.d3Node, color: string }, {}> 
 export default class Nodes extends React.Component<{ nodes: d3Types.d3Node[], simulation: any }, {}> {
   componentDidMount() {
     const simulation = this.props.simulation;
-    d3.selectAll(".node").call(drag(simulation));
+    d3.selectAll<SVGSVGElement, unknown>(".node").call(drag(simulation));
 
     function drag(simulation: { alphaTarget: (arg0: number) => { (): any; new(): any; restart: { (): void; new(): any; }; }; }) {    
         function dragstarted(event: { active: any; subject: { fx: any; x: any; fy: any; y: any; }; }) {
@@ -42,7 +42,7 @@ export default class Nodes extends React.Component<{ nodes: d3Types.d3Node[], si
             event.subject.fy = null;
         }
 
-        return d3.drag()
+        return d3.drag<SVGSVGElement, unknown>()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended);
