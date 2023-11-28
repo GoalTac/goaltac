@@ -2,12 +2,29 @@ import Link from "next/link";
 import Image from "next/image";
 import { api } from "~/utils/api";
 import { FaLinkedin,  } from "react-icons/fa";
-import { Button } from "~/components/ui/button";
 import { useRouter } from "next/router";
 import CountUp from "react-countup";
 import VisibilitySensor from "react-visibility-sensor";
 import Graph from "~/components/graph/graph";
 import data from "../components/graph/miserables";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Icons } from "./../components/ui/icons";
+import { Button } from "./../components/ui/button";
+import { Input } from "./../components/ui/input";
+import React, { useState } from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./../components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
+import { d3Types } from "~/components/graph/types";
+import { link } from "fs";
 
 export default function Landing() {
 
@@ -79,10 +96,7 @@ export function Main() {
         </div>
       </div>
       <div className="container flex flex-col items-center justify-center py-8 mx-auto rounded-lg md:p-1 p-3">
-      <Graph
-      width={1000}
-      height={1000}
-      graph={data} />
+        <InteractiveGraph/>
       </div>
       <section className="text-gray-600 body-font">
         <section className="text-gray-600 body-font">
@@ -440,4 +454,128 @@ export function Main() {
       </section>
     </section>
   );
+}
+function InteractiveGraph() {
+
+  const [nodes, setNodes] = useState<d3Types.d3Node[]>(data.nodes)
+  const [links, setLinks] = useState<d3Types.d3Link[]>(data.links)
+
+  function LinkForm() {
+
+    const formSchema = z.object({
+      source: z.string(),
+      target: z.string(),
+      value: z.number()
+    });
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        source: "",
+        target: "",
+        value: 1
+      },
+    });
+    function onSubmit(formData: z.infer<typeof formSchema>) {
+
+      //if user calls exisiting node
+      const foundSource = nodes.filter((node)=> node.id == formData.source)
+
+      //if user calls existing node
+      const foundTarget = nodes.filter((node)=> node.id == formData.target)
+
+
+      if (foundSource.length == 0) {
+        setNodes([...nodes, {id: formData.source, group: 1}])
+      }
+      if (foundTarget.length == 0) {
+        setNodes([...nodes, {id: formData.target, group: 1}])
+      }
+      setLinks([...links, {source: formData.source, target: formData.target, value: formData.value}])
+
+
+
+      form.reset()
+    }
+
+    
+    return (<div className="w-full">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid gap-4 grid-cols-3">
+            <div>
+                <FormField
+                  control={form.control}
+                  name='source'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Input type='text' className="text-black"
+                            placeholder="Enter a source node" {...field} />
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuRadioGroup value={form.getValues().source} onValueChange={(value)=>form.setValue('source', value)}>
+                              {nodes.map((node: { id: string, group: number})=>{
+                                return <DropdownMenuRadioItem key={node.id} value={node.id}>
+                                  {node.id}
+                                </DropdownMenuRadioItem>
+                              })}
+                            </DropdownMenuRadioGroup>
+                            
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                        
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name='target'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Input type='text' className="text-black"
+                            placeholder="Enter a target node" {...field} />
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuRadioGroup value={form.getValues().target} onValueChange={(value)=>form.setValue('target', value)}>
+                              {nodes.map((node: { id: string, group: number})=>{
+                                return <DropdownMenuRadioItem key={node.id} value={node.id}>
+                                  {node.id}
+                                </DropdownMenuRadioItem>
+                              })}
+                            </DropdownMenuRadioGroup>
+                            
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                        
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button
+                type="submit"
+                className="wifocus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg text-center text-sm font-medium text-white focus:outline-none focus:ring-4">
+                Add Link
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>)
+  }
+
+//make the width and height changeable
+  return <div className='grid gap-2'>
+    <LinkForm/>
+    <Graph width={600} height={600} graph={{nodes, links}} />
+  </div>
 }

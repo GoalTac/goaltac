@@ -19,12 +19,24 @@ class Node extends React.Component<{ node: d3Types.d3Node, color: string }, {}> 
   }
 }
 
-export default class Nodes extends React.Component<{ nodes: d3Types.d3Node[], simulation: any }, {}> {
+export default class Nodes extends React.Component<{ data: {width: number, height: number, nodes: d3Types.d3Node[]}, simulation: any }, {}> {
+    
   componentDidMount() {
     const simulation = this.props.simulation;
+    const width = this.props.data.width
+    const height = this.props.data.height
+    const nodes = this.props.data.nodes
+
     d3.selectAll<SVGSVGElement, unknown>(".node").call(drag(simulation));
 
-    function drag(simulation: { alphaTarget: (arg0: number) => { (): any; new(): any; restart: { (): void; new(): any; }; }; }) {    
+    function drag(simulation: { alphaTarget: (arg0: number) => { (): any; new(): any; restart: { (): void; new(): any; }; }; }) {  
+
+      //to prevent escaping their prison
+      function validate(x: number, a: number, b: number) {
+            if (x < a) x = a;
+            if (x > b) x = b;
+            return x;
+        }  
         function dragstarted(event: { active: any; subject: { fx: any; x: any; fy: any; y: any; }; }) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
             event.subject.fx = event.subject.x;
@@ -32,8 +44,11 @@ export default class Nodes extends React.Component<{ nodes: d3Types.d3Node[], si
         }
 
         function dragged(event: { subject: { fx: any; fy: any; }; x: any; y: any; }) {
-            event.subject.fx = event.x;
-            event.subject.fy = event.y;
+          event.subject.fx = validate(event.x, 0, width);
+          event.subject.fy = validate(event.y, 0, height);
+
+            //event.subject.fx = event.x;
+            //event.subject.fy = event.y;
         }
 
         function dragended(event: { active: any; subject: { fx: null; fy: null; }; }) {
@@ -52,10 +67,9 @@ export default class Nodes extends React.Component<{ nodes: d3Types.d3Node[], si
 
   render() {
     const color = d3.scaleOrdinal(d3.schemeAccent);
-    const nodes = this.props.nodes.map((node: d3Types.d3Node, index: number) => {
+    const nodes = this.props.data.nodes.map((node: d3Types.d3Node, index: number) => {
       return <Node key={index} node={node} color={color(node.group.toString())} />;
     });
-
     return (
       <g className="nodes">
         {nodes}
