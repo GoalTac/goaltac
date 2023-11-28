@@ -11,7 +11,7 @@ class Node extends React.Component<{ node: d3Types.d3Node, color: string }, {}> 
 
   render() {
     return (
-      <circle className="node cursor-pointer" r={6} fill={this.props.color}
+      <circle className="node cursor-pointer" r={12} fill={this.props.color}
         ref={(ref: SVGCircleElement) => this.ref = ref}>
         <title>{this.props.node.id}</title>
       </circle>
@@ -44,8 +44,8 @@ export default class Nodes extends React.Component<{ data: {width: number, heigh
         }
 
         function dragged(event: { subject: { fx: any; fy: any; }; x: any; y: any; }) {
-          event.subject.fx = validate(event.x, 0, width);
-          event.subject.fy = validate(event.y, 0, height);
+          event.subject.fx = validate(event.x, 12, width-12);
+          event.subject.fy = validate(event.y, 12, height-12);
 
             //event.subject.fx = event.x;
             //event.subject.fy = event.y;

@@ -23,7 +23,7 @@ export default class Graph extends React.Component<Props, {}> {
       .force("link", d3.forceLink().id((d: any) => {
         return d.id;
       }))
-      .force("charge", d3.forceManyBody())
+      .force("charge", d3.forceManyBody().strength(-300))
       .force("center", d3.forceCenter(this.props.width / 2, this.props.height / 2))
       .nodes(this.props.graph.nodes as d3.SimulationNodeDatum[])
     function validate(x: number, a: number, b: number) {
@@ -49,7 +49,7 @@ export default class Graph extends React.Component<Props, {}> {
 
     this.simulation.alphaTarget(0.3).restart()
 
-    return (<svg className="border border-black"
+    return (<svg className="border 10 border-black bg-white"
         width={this.props.width} height={this.props.height}>
         <g>
             <Links links={this.props.graph.links} />
@@ -60,7 +60,6 @@ export default class Graph extends React.Component<Props, {}> {
   }
 
   tick() {
-    const simulation = this.simulation
     const node = d3.selectAll(".node");
     const link = d3.selectAll(".link");
     const label = d3.selectAll(".label");
@@ -92,15 +91,15 @@ export default class Graph extends React.Component<Props, {}> {
     //prevents escaping from the prison
     node
     .attr("cx", function(d: any) { 
-      const xVal = validate(d.x, 0, 600)
-
-      //to update so that labels know
-      d.x = xVal
+      const xVal = validate(d.x, 0, 800)
+      
+      //to update the labels
+      if (d.x != xVal) d.y = xVal
       return xVal;
     })
     .attr("cy", function(d: any) { 
       const yVal = validate(d.y, 0, 600)
-      d.y = yVal
+      if (d.y != yVal) d.y = yVal
       return yVal;
     });
 
@@ -123,7 +122,7 @@ export default class Graph extends React.Component<Props, {}> {
         d3.select('svg g').attr('transform', e.transform)
     }
 
-    d3.select<SVGSVGElement, unknown>('svg').call(zoom)
+    d3.select<SVGSVGElement, unknown>('svg g').call(zoom)
   }
 
 

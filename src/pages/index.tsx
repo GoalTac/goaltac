@@ -26,16 +26,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioG
 import { d3Types } from "~/components/graph/types";
 import { link } from "fs";
 import Error from "next/error";
-
-export default function Landing() {
-
-  const router = useRouter()
-
-  return (
-    <main className="flex min-h-screen w-screen flex-col bg-white">
-      <div className="container flex-col gap-12 px-4 py-16">
-        {/* Header */}
-        <div className="body-font">
+import Header from "~/components/landingPage/header";
+/**
+ * <div className="body-font">
           <div className="container justify-between items-center flex flex-wrap p-5 md:flex-row">
             <Image src="/name_logo.png"
               width={400}
@@ -49,51 +42,66 @@ export default function Landing() {
           </div>
           
         </div>
+ * @returns 
+ */
+export default function Landing() {
 
-        <Main />
+  const router = useRouter()
 
-        {/* Footer */}
-        <footer className="text-black body-font">
-        <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-          <a className="flex title-font font-medium items-center md:justify-start justify-center" href="/">
-            <Image src="/name_logo.png"
-              width={80}
-              height={40}
-              className="h-auto w-auto"
-              alt="GoalTac Logo"/>
-          </a>
-          
-          <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-            <a className="ml-3 size:2xl" target='_blank' href="https://www.linkedin.com/company/92931369/">
-              <FaLinkedin/>
+  return (
+    <main className="flex min-h-screen w-screen flex-col bg-white bg-no-repeat bg-contain bg-[url('/wave.svg')]">
+      <div className='w-full'>
+        {/* Header */}
+        <Header/>
+        <div className="container flex-col gap-12 px-4 py-16">
+          <Main />
+          {/* Footer */}
+          <footer className="text-black body-font">
+          <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+            <a className="flex title-font font-medium items-center md:justify-start justify-center" href="/">
+              <Image src="/name_logo.png"
+                width={80}
+                height={40}
+                className="h-auto w-auto"
+                alt="GoalTac Logo"/>
             </a>
-          </span>
+            
+            <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+              <a className="ml-3 size:2xl" target='_blank' href="https://www.linkedin.com/company/92931369/">
+                <FaLinkedin/>
+              </a>
+            </span>
+          </div>
+        </footer>
         </div>
-      </footer>
       </div>
     </main>
   );
 }
 
+
+
 //for the main body of the landing page
 export function Main() {
   return (
-    <section className="text-black body-font lg:pt-20">
-      <div className="container px-5 pt-20 mx-auto lg:px-4 lg:py-4">
+    <section className="text-black body-font lg:pt-20 flex flex-col gap-20 ">
+      <div className="container h-[80vh] pt-20 mx-auto lg:px-4 lg:py-4">
         <div className="flex flex-col w-full mb-2 text-left md:text-center ">
-          <h1 className="mb-2 text-6xl font-bold tracking-tighter text-black lg:text-8xl md:text-7xl">
+          <h1 className="mb-2 text-6xl font-bold tracking-tighter text-gray-900 lg:text-8xl md:text-7xl">
             <span>Build Your</span>
             <br className="hidden lg:block"></br>
-            True Network
+            {' '}True Network
           </h1>
           <br></br>
-          <p className="mx-auto  text-xl font-normal leading-relaxed text-gray-600 dark:text-gray-300 lg:w-2/3">
+          <p className="mx-auto  text-xl font-normal leading-relaxed text-gray-900 dark:text-gray-900 lg:w-2/3">
             GoalTac helps you initiate and build high-quality professional relationships through mutual connections with the visualization of your network in relation to you never seen before.
           </p>
         </div>
       </div>
-      <div className="container hidden 2xl:block w-full flex flex-col items-center justify-center ">
-
+      <div className="hidden md:block mx-auto">
+        <h3 className="mb-2 text-3xl font-bold tracking-tighter text-gray-900 lg:text-4xl md:text-3xl">
+            <span>Manage your connections easily</span>
+          </h3>
         <InteractiveGraph/>
       </div>
       
@@ -579,11 +587,11 @@ function InteractiveGraph() {
                   )}
                 />
               </div>
-              <div className='w-full'></div>
+              <div className='max-w-full'></div>
               <Button
                 type="submit"
                 className="wifocus:ring-primary-300 w-min dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg text-center text-sm font-medium text-white focus:outline-none focus:ring-4">
-                Add Link
+                Connect!
               </Button>
             </div>
           </form>
@@ -592,8 +600,8 @@ function InteractiveGraph() {
   }
 
 //make the width and height changeable
-  return <div className='grid gap-2'>
+  return <div className='w-min grid gap-4'>
     <LinkForm/>
-    <Graph width={600} height={600} graph={{nodes, links}} />
+    <Graph width={800} height={600} graph={{nodes, links}} />
   </div>
 }

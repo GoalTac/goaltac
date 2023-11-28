@@ -5,8 +5,8 @@
 @layer base {
   
   .node {
-    stroke: #fff;
-    stroke-width: 1.5px;
+    stroke: #cbcbcb;
+    stroke-width: 2.5px;
   }
   
   .link {
@@ -15,8 +15,8 @@
   }
   
   .label {
-    font-size: 10px;
-    fill: #57575752;
+    font-size: 14px;
+    fill: #00000079;
   }
   :root {
     --background: 0 0% 100%;
