@@ -20,6 +20,7 @@ export default class Graph extends React.Component<Props, {}> {
     super(props);
     this.width = props.width
     this.height = props.height
+    console.log('1')
 
     this.simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id((d: any) => {
@@ -38,6 +39,8 @@ export default class Graph extends React.Component<Props, {}> {
 
     //updates the links
     this.simulation.force("link").links(this.props.graph.links);
+
+    this.simulation.alphaTarget(0.3).restart()
 
     return (<svg className="border border-black"
         width={this.props.width} height={this.props.height}>
@@ -73,13 +76,13 @@ export default class Graph extends React.Component<Props, {}> {
     .attr("cx", function(d: any) { return d.x })
     .attr("cy", function(d: any) { return d.y });
 
-  label
-    .attr("x", function (d: any) {
-      return d.x + 5;
-    })
-    .attr("y", function (d: any) {
-      return d.y + 5;
-    });
+    label
+      .attr("x", function (d: any) {
+        return d.x + 5;
+      })
+      .attr("y", function (d: any) {
+        return d.y + 5;
+      });
 }
 
   componentDidMount() {
