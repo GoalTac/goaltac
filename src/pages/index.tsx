@@ -25,14 +25,15 @@ import { z } from "zod";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
 import { d3Types } from "~/components/graph/types";
 import { link } from "fs";
+import Error from "next/error";
 
 export default function Landing() {
 
   const router = useRouter()
 
   return (
-    <main className="flex min-h-screen flex-col bg-[url('/bubble_background.svg')]">
-      <div className="container h-[100vh] flex-col gap-12 px-4 py-16 bg-white">
+    <main className="flex min-h-screen w-screen flex-col bg-white">
+      <div className="container flex-col gap-12 px-4 py-16">
         {/* Header */}
         <div className="body-font">
           <div className="container justify-between items-center flex flex-wrap p-5 md:flex-row">
@@ -78,27 +79,26 @@ export default function Landing() {
 export function Main() {
   return (
     <section className="text-black body-font lg:pt-20">
-      <div className="container px-5 pt-32 mx-auto lg:px-4 lg:py-4">
+      <div className="container px-5 pt-20 mx-auto lg:px-4 lg:py-4">
         <div className="flex flex-col w-full mb-2 text-left md:text-center ">
           <h1 className="mb-2 text-6xl font-bold tracking-tighter text-black lg:text-8xl md:text-7xl">
-            <span>We are making </span>
+            <span>Build Your</span>
             <br className="hidden lg:block"></br>
-            Stunning websites
+            True Network
           </h1>
           <br></br>
           <p className="mx-auto  text-xl font-normal leading-relaxed text-gray-600 dark:text-gray-300 lg:w-2/3">
-            nine4 is a free to use template website for websites made with{" "}
-            <a href="https://nextjs.org/" className="underline">
-              Next.js
-            </a>{" "}
-            and styled with Tailwind CSS
+            GoalTac helps you initiate and build high-quality professional relationships through mutual connections with the visualization of your network in relation to you never seen before.
           </p>
         </div>
       </div>
-      <div className="container flex flex-col items-center justify-center py-8 mx-auto rounded-lg md:p-1 p-3">
+      <div className="container hidden 2xl:block w-full flex flex-col items-center justify-center ">
+
         <InteractiveGraph/>
       </div>
+      
       <section className="text-gray-600 body-font">
+        {/* 
         <section className="text-gray-600 body-font">
           <div className="container px-5 py-10 mx-auto">
             <div className="flex flex-wrap -m-4 text-center">
@@ -141,6 +141,7 @@ export function Main() {
             </div>
           </div>
         </section>
+        */}
         <div className="container px-5 py-24 mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
             <img
@@ -483,6 +484,24 @@ function InteractiveGraph() {
       //if user calls existing node
       const foundTarget = nodes.filter((node)=> node.id == formData.target)
 
+      if (foundTarget.length == 0 && foundSource.length == 0) {
+        form.reset()
+        form.setError("target", { type: 'custom', message: 'Select an existing person' });
+        setTimeout(()=>{
+          form.clearErrors("target")
+        },2000)
+        return
+      } 
+      //if they are the same people
+
+      if (foundTarget[0]?.id == foundSource[0]?.id) {
+        form.reset()
+        form.setError("source", { type: 'custom', message: 'Please select different people' });
+        setTimeout(()=>{
+          form.clearErrors("source")
+        },2000)
+        return
+      }
 
       if (foundSource.length == 0) {
         setNodes([...nodes, {id: formData.source, group: 1}])
@@ -500,9 +519,9 @@ function InteractiveGraph() {
     
     return (<div className="w-full">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4 grid-cols-3">
-            <div>
+          <form onSubmit={form.handleSubmit(onSubmit)} name='root'>
+            <div className="flex gap-4">
+            <div className='w-full'>
                 <FormField
                   control={form.control}
                   name='source'
@@ -515,24 +534,22 @@ function InteractiveGraph() {
                             placeholder="Enter a source node" {...field} />
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
-                            <DropdownMenuRadioGroup value={form.getValues().source} onValueChange={(value)=>form.setValue('source', value)}>
+                            <DropdownMenuRadioGroup className="overflow-auto h-48 max-h-full" value={form.getValues().source} onValueChange={(value)=>form.setValue('source', value)}>
                               {nodes.map((node: { id: string, group: number})=>{
                                 return <DropdownMenuRadioItem key={node.id} value={node.id}>
                                   {node.id}
                                 </DropdownMenuRadioItem>
                               })}
                             </DropdownMenuRadioGroup>
-                            
                           </DropdownMenuContent>
                         </DropdownMenu>
-                        
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-              <div>
+              <div className='w-full'>
                 <FormField
                   control={form.control}
                   name='target'
@@ -545,7 +562,7 @@ function InteractiveGraph() {
                             placeholder="Enter a target node" {...field} />
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
-                            <DropdownMenuRadioGroup value={form.getValues().target} onValueChange={(value)=>form.setValue('target', value)}>
+                            <DropdownMenuRadioGroup className="overflow-auto h-48 max-h-full" value={form.getValues().target} onValueChange={(value)=>form.setValue('target', value)}>
                               {nodes.map((node: { id: string, group: number})=>{
                                 return <DropdownMenuRadioItem key={node.id} value={node.id}>
                                   {node.id}
@@ -562,9 +579,10 @@ function InteractiveGraph() {
                   )}
                 />
               </div>
+              <div className='w-full'></div>
               <Button
                 type="submit"
-                className="wifocus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg text-center text-sm font-medium text-white focus:outline-none focus:ring-4">
+                className="wifocus:ring-primary-300 w-min dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg text-center text-sm font-medium text-white focus:outline-none focus:ring-4">
                 Add Link
               </Button>
             </div>

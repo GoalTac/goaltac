@@ -13,22 +13,29 @@ interface Props {
 
 export default class Graph extends React.Component<Props, {}> {
   simulation: any;
-  width: number
-  height: number
 
   constructor(props: Props) {
     super(props);
-    this.width = props.width
-    this.height = props.height
-    console.log('1')
+    const w = props.width
+    const h = props.height
 
     this.simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id((d: any) => {
         return d.id;
       }))
-      .force("charge", d3.forceManyBody().strength(-100))
+      .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(this.props.width / 2, this.props.height / 2))
       .nodes(this.props.graph.nodes as d3.SimulationNodeDatum[])
+    function validate(x: number, a: number, b: number) {
+      if (x < a) x = a;
+      if (x > b) x = b;
+      return x;
+    }  
+
+    this.props.graph.nodes.forEach(function(d:any) { 
+      d.x = validate(d.x, 0, w);
+      d.y = validate(d.y, 0, h);
+    })
     
     this.simulation.force("link").links(this.props.graph.links);
   }
@@ -53,9 +60,20 @@ export default class Graph extends React.Component<Props, {}> {
   }
 
   tick() {
+    const simulation = this.simulation
     const node = d3.selectAll(".node");
     const link = d3.selectAll(".link");
     const label = d3.selectAll(".label");
+    function validate(x: number, a: number, b: number) {
+      if (x < a) {
+        
+        x = a;
+      }
+      if (x > b) {
+        x = b;
+      }
+      return x;
+    } 
 
     link
     .attr("x1", function (d: any) {
@@ -73,8 +91,18 @@ export default class Graph extends React.Component<Props, {}> {
 
     //prevents escaping from the prison
     node
-    .attr("cx", function(d: any) { return d.x })
-    .attr("cy", function(d: any) { return d.y });
+    .attr("cx", function(d: any) { 
+      const xVal = validate(d.x, 0, 600)
+
+      //to update so that labels know
+      d.x = xVal
+      return xVal;
+    })
+    .attr("cy", function(d: any) { 
+      const yVal = validate(d.y, 0, 600)
+      d.y = yVal
+      return yVal;
+    });
 
     label
       .attr("x", function (d: any) {
