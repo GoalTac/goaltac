@@ -47,9 +47,9 @@ export default class Graph extends React.Component<Props, {}> {
     //updates the links
     this.simulation.force("link").links(this.props.graph.links);
 
-    this.simulation.alphaTarget(0.3).restart()
+    this.simulation.alphaTarget(0).restart()
 
-    return (<svg className="border 10 border-black bg-white"
+    return (<svg className="border border-black bg-white"
         width={this.props.width} height={this.props.height}>
         <g>
             <Links links={this.props.graph.links} />
