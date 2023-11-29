@@ -40,7 +40,7 @@ export default function Newsletter() {
               <div className="relative flex flex-col lg:flex-row justify-between items-center">
   
                 {/* CTA content */}
-                <div className="text-center lg:text-left lg:max-w-xl flex flex-col md:flex-row">
+                <div className="text-center lg:max-w-xl flex flex-col md:flex-row lg:flex-col">
                     <div className='flex flex-col max-w-md px-10'>
                         <h3 className="h3 text-white mb-2">Want to start?</h3>
                         <p className="text-gray-300 text-lg mb-6">Register your email here and help GoalTac be the best it can be with your feedback and support. Also connect with us on LinkedIn!</p>

@@ -89,7 +89,7 @@ export function Main() {
             </p>
           </div>
           <div className='w-full mx-auto mt-20 md:mt-0 md:mr-20'>
-            <div className="flex justify-center dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-14 xl:p-0">
+            <div className="max-w-[20rem] flex justify-center dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-14 xl:p-0">
                 <BetaSignUp/>
             </div>
           </div>
