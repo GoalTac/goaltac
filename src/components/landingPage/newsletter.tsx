@@ -42,8 +42,8 @@ export default function Newsletter() {
                 {/* CTA content */}
                 <div className="text-center lg:text-left lg:max-w-xl flex flex-col md:flex-row">
                     <div className='flex flex-col max-w-md px-10'>
-                        <h3 className="h3 text-white mb-2">Want more tutorials & guides?</h3>
-                        <p className="text-gray-300 text-lg mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit nemo expedita voluptas culpa sapiente.</p>
+                        <h3 className="h3 text-white mb-2">Want to start?</h3>
+                        <p className="text-gray-300 text-lg mb-6">Register your email here and help GoalTac be the best it can be with your feedback and support. Also connect with us on LinkedIn!</p>
                     </div>
                   
                   {/* CTA form */}
