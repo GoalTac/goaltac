@@ -48,9 +48,7 @@ export function BetaSignUp() {
     <div className="grid gap-2 w-min">
       <div className="shadow-lg space-y-2 p-4 sm:p-6 md:space-y-4 bg-white rounded-lg">
         <h1 className="text-lg text-center mx-auto leading-tight tracking-tight text-gray-800 font-small dark:text-white md:text-lg">
-            <span>Be the first to</span>
-            <br className="hidden md:block"></br>
-            {' '}build your network
+            <span>Register for updates</span>
         </h1>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>

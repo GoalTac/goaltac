@@ -73,12 +73,12 @@ export default function Landing() {
 export function Main() {
   return (
     <section className="text-black body-font lg:pt-20 flex flex-col gap-20 ">
-      <div className="w-full h-[60vh] pt-20 mx-auto lg:px-4 lg:py-4">
+      <div className="w-full pt-20 mb-96 mx-auto lg:px-4 lg:py-4">
 
-      <div className="md:justify-center flex flex-col md:flex-row">
+      <div className="md:justify-between flex flex-col md:flex-row mx-auto">
           {/* The description of goaltac */}
-          <div className="flex flex-col max-w-lg mb-2 text-center">
-            <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 lg:text-7xl md:text-6xl">
+          <div className="flex flex-col max-w-2xl mb-2 text-center mx-10">
+            <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 lg:text-6xl md:text-5xl">
               <span>Build Your</span>
               <br className="hidden md:block"></br>
               {' '}True Network
@@ -88,8 +88,8 @@ export function Main() {
               GoalTac is a social networking application to help you grow quality professional relationships through your mutual connections.
             </p>
           </div>
-          <div className='justify-content-end mt-auto'>
-            <div className="w-full h-min dark:border dark:border-gray-700 dark:bg-gray-800 w-min md:mt-0 xl:p-0">
+          <div className='mt-auto md:mr-20'>
+            <div className="w-full mx-auto h-min dark:border dark:border-gray-700 dark:bg-gray-800 w-min md:mt-14 xl:p-0">
               <BetaSignUp/>
             </div>
           </div>
@@ -105,7 +105,7 @@ export function Main() {
       </div>
       
       <section className="text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto flex flex-wrap">
+        <div className="container px-5 py-24 w-full">
           {/*<div className="lg:w-1/2 w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
             <img src="/name_logo.png"
                 width=''
@@ -113,8 +113,8 @@ export function Main() {
                 className="object-cover object-center h-full w-full"
                 alt="GoalTac Logo"/>
            </div>*/}
-          <div className="mx-auto grid grid-cols-2 justify-center flex flex-col md:flex-row flex-wrap lg:py-6 -mb-10 lg:w-1/2 lg:pl-12 lg:text-left text-center">
-            <div className="flex flex-col mb-10 lg:items-start items-center">
+          <div className="mx-auto flex flex-wrap justify-center text-center">
+            <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">
                   Easy Networking
@@ -124,7 +124,7 @@ export function Main() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col mb-10 lg:items-start items-center">
+            <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">
                   Quality Relationships
@@ -134,7 +134,7 @@ export function Main() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col mb-10 lg:items-start items-center">
+            <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">
                   Discover Real People
@@ -144,7 +144,7 @@ export function Main() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col mb-10 lg:items-start items-center">
+            <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">
                   Fun and Engaging
@@ -154,7 +154,7 @@ export function Main() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col mb-10 lg:items-start items-center">
+            <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">
                   Visually Stunning
