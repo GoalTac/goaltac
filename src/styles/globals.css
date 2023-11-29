@@ -3,6 +3,21 @@
 @tailwind utilities;
 
 @layer base {
+  
+  .node {
+    stroke: #0000002d;
+    stroke-width: 2.5px;
+  }
+  
+  .link {
+    stroke: #cbcbcb;
+    stroke-opacity: 0.5;
+  }
+  
+  .label {
+    font-size: 14px;
+    fill: #00000079;
+  }
   :root {
     --background: 0 0% 100%;
     --foreground: 190 100% 42%;

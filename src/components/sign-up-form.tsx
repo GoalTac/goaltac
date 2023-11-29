@@ -1,142 +1,186 @@
 "use client";
 
-import * as React from "react";
-
-import { cn } from "../utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Icons } from "./ui/icons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 import { api } from "~/utils/api";
 import { useToast } from "./ui/use-toast";
-import { Form, FormLabel } from "./ui/form";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useState } from "react";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-interface FormData {
-  email: string;
-  password: string;
-}
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
 
-export function SignUpForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [data, setData] = React.useState<FormData>({
-    email: "",
-    password: "",
-  });
-  const [emailUsed, setEmailUsed] = React.useState<boolean>(false);
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const email: string = event.target.value;
-    setData({
-      ...data,
-      email: email,
-    });
-  };
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setData({
-      ...data,
-      password: event.target.value,
-    });
-  };
-
-  const signupEmail = api.auth.signUpEmail.useMutation();
+export function SignUpForm({ setSubmitted }: any) {
   const { toast } = useToast();
+  const router = useRouter();
+  const supabase = useSupabaseClient()
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
+  const signUpEmailMutation = api.auth.signUpEmail.useMutation();
 
-    //valiation of user authentication
-    const process = async () => {
-      //sends request to routers/auth.ts to sign up email
-      const emailSignUp = await signupEmail.mutateAsync({
-        email: data.email,
-        password: data.password,
-      });
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-      //if the email is in use
-      const emailExists = emailSignUp.userExists;
-      if (emailExists) {
-        setEmailUsed(true);
-        return {
-          error: Error("The email is already in use. Please try another one."),
-        };
-      } else {
-        setEmailUsed(false);
-        return { error: null };
+  async function onSubmit(formData: z.infer<typeof formSchema>) {
+    async function signUp() {
+      const { data, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+              emailRedirectTo: "http://localhost:3000/auth/callback"
+          }
+      })
+
+      if(error) {
+          throw new Error(error.message)
       }
-    };
 
-    //can the account details be registed successfully?
-    const status = await process().finally(() => setIsLoading(false));
+      const userExists = data?.user?.identities?.length == 0
 
-    //if so, reset the data
-    if (status.error == null) {
-      setData({
-        email: "",
-        password: "",
-      });
+      if (userExists) {
+          throw new Error('The email is already in use')
+      }
+
+      if(data.session) await supabase.auth.setSession(data.session)
+
+      return { data, error, userExists };
+    }
+
+    const process = await signUp()
+    
+    //this means the singup process was successful
+    if (process.data) {
+      form.reset();
       toast({
         variant: "success",
         title: "One more thing...",
         description:
           "A verification email has been sent to your inbox. Please verify your account!",
       });
-    } else {
-      toast({
-        variant: "destructive",
-        description: status.error.message,
-      });
+      setSubmitted(formData.email)
     }
+
+    if (process.error) {
+      toast({
+        duration: 6000,
+        variant: "destructive",
+        description: process.error,
+      })
+    }
+    
+    /*signUpEmailMutation.mutate(data, {
+      onSuccess: () => {
+        form.reset();
+        toast({
+          variant: "success",
+          title: "One more thing...",
+          description:
+            "A verification email has been sent to your inbox. Please verify your account!",
+        });
+      },
+      onError: (error) =>
+        toast({
+          duration: 6000,
+          variant: "destructive",
+          description: error.message,
+        }),
+    });*/
   }
 
+
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
+    <div className="grid gap-6">
+      <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div>
-            <Label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-              Your email
-            </Label>
-            {emailUsed && (
-              <span className="text-xs text-destructive">
-                {" "}
-                {" Email already registed. Try a different one!"}
-              </span>
-            )}
-            <Input
-              type="email"
-              required
-              value={data.email}
-              onChange={(event) => handleEmailChange(event)}
-              name="email"
-              id="email"
-              className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
-              placeholder="name@company.com"
-            />
+          <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">Email</FormLabel>
+                    {signUpEmailMutation.data?.userExists && 
+                      <span className="text-xs text-destructive">
+                      {" Email already registed"}
+                    </span>}
+                    <FormControl>
+                      <Input className="text-black"
+                      type='email'
+                      placeholder="Enter your email.." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}/>
           </div>
           <div>
-            <Label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-              Password
-            </Label>
-            <Input
-              type="password"
-              required
-              value={data.password}
-              onChange={(event) => handlePasswordChange(event)}
+            <FormField
+              control={form.control}
               name="password"
-              id="password"
-              placeholder="••••••••"
-              className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
-            />
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">Password</FormLabel>
+                  <FormControl>
+                    <Input className="text-black"
+                      type="password"
+                      placeholder="Enter your password..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}/>
           </div>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading && (
+          <Button
+            type="submit"
+            disabled={signUpEmailMutation.isLoading}
+            className="focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4">
+            {signUpEmailMutation.isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             Sign Up with Email
           </Button>
         </div>
       </form>
+      </Form>
+
+      <p className="px-8 text-center text-sm text-muted-foreground">
+        By clicking continue, you agree to our{" "}
+        <Link
+          href="/terms"
+          className="underline underline-offset-4 hover:text-primary"
+        >
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link
+          href="/privacy"
+          className="underline underline-offset-4 hover:text-primary"
+        >
+          Privacy Policy
+        </Link>
+        .
+      </p>
     </div>
   );
 }

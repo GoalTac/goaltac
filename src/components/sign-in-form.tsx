@@ -18,6 +18,8 @@ import {
 } from "./ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -27,6 +29,7 @@ const formSchema = z.object({
 export function SignInForm() {
   const { toast } = useToast();
   const router = useRouter();
+  const supabase = useSupabaseClient()
 
   const signInEmailMutation = api.auth.signInEmail.useMutation();
 
@@ -38,7 +41,29 @@ export function SignInForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(formData: z.infer<typeof formSchema>) {
+    
+    const { data, error } = await supabase.auth.signInWithPassword(formData)
+
+    if(error) {
+        toast({
+          duration: 6000,
+          variant: "destructive",
+          description: error.message,
+        })
+        throw new Error(error.message)
+    } else {
+      form.reset();
+      toast({
+        duration: 3000,
+        variant: "success",
+        description: "Logging in now...",
+      });
+      void router.push('/dashboard')
+    }
+
+    return { data, error };
+    /*
     signInEmailMutation.mutate(data, {
       onSuccess: () => {
         form.reset();
@@ -49,17 +74,20 @@ export function SignInForm() {
         });
         void router.push("/dashboard");
       },
-      onError: (error) =>
+      onError: (error) => 
         toast({
           duration: 6000,
           variant: "destructive",
           description: error.message,
-        }),
-    });
+        })
+    });*/
   }
 
   return (
     <div className="grid gap-6">
+      <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
+        Sign in to your account
+      </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid gap-2">
@@ -69,9 +97,11 @@ export function SignInForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your email.." {...field} />
+                      <Input 
+                      type='email' className="text-black"
+                      placeholder="Enter your email.." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -84,9 +114,9 @@ export function SignInForm() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-sm font-medium text-gray-900 dark:text-white">Password</FormLabel>
                     <FormControl>
-                      <Input
+                      <Input className='text-black'
                         type="password"
                         placeholder="Enter your password..."
                         {...field}

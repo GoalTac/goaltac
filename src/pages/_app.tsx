@@ -1,24 +1,21 @@
+"use client"
 import { type AppProps, type AppType } from "next/app";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import { ThemeProvider } from "~/components/theme-provider";
-import { useState, type ReactElement, type ReactNode } from "react";
+import { useState, type ReactElement, type ReactNode, useEffect } from "react";
 import { type NextPage } from "next";
 import {
-  type Session,
   createPagesBrowserClient,
+  type Session,
   type SupabaseClient,
 } from "@supabase/auth-helpers-nextjs";
 import { Toaster } from "../components/ui/toaster";
 import { type Database } from "~/types/supabase";
-import {
-  SessionContextProvider,
-  useSession,
-  useSessionContext,
-} from "@supabase/auth-helpers-react";
-import { createBrowserClient } from "@supabase/ssr";
+import Script from "next/script";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 
 export type TypedSupabaseClient = SupabaseClient<Database>;
 
@@ -31,30 +28,29 @@ type AppPropsWithLayout = AppProps<{
 }> & {
   Component: NextPageWithLayout;
 };
-
 const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
   Component,
   pageProps,
 }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page);
-
-  const [supabaseClient] = useState(() => createPagesBrowserClient());
-
-  const test = api.auth.getSession.useQuery({});
-
-  const { isLoading, session, error } = useSessionContext();
-
-  // if (isLoading) return <>l</>;
-
-  console.log("session", session?.user);
-
-  console.log("a", supabaseClient);
+  const [supabase] = useState(() => createPagesBrowserClient())
 
   return (
+    <>
+    <Script strategy="lazyOnload"
+      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}/>
+
+    <Script strategy="lazyOnload">
+      {`window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+        page_path: window.location.pathname,
+        });`}</Script>
+    
     <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
-    >
+      supabaseClient={supabase}
+      initialSession={pageProps.initialSession}>
       <ThemeProvider
         attribute="class"
         defaultTheme="light"
@@ -64,7 +60,7 @@ const MyApp: AppType<{ initialSession: Session | null | undefined }> = ({
         {getLayout(<Component {...pageProps} />)}
         <Toaster />
       </ThemeProvider>
-    </SessionContextProvider>
+    </SessionContextProvider></>
   );
 };
 

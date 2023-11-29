@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
+import { api } from "~/utils/api";
 import NavLink from "./nav-link";
 import { Avatar } from "./ui/avatar";
 import {
@@ -20,7 +20,9 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { cn } from "~/utils";
 import { ThemeToggle } from "./theme-toggle";
-import { useSession } from "@supabase/auth-helpers-react";
+
+import { useToast } from "./ui/use-toast";
+import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 const navItems = [
   {
@@ -83,14 +85,64 @@ export function MainNavigation({
   toggleExpanded: () => void;
 }) {
   const { pathname, push } = useRouter();
+  const supabase = useSupabaseClient()
   const session = useSession();
+  const user = useUser()
 
-  console.log(session);
-  // useEffect(() => {
-  //   if (!session) void push("/");
-  // }, [session, push]);
+  const { toast } = useToast();
+  const router = useRouter();
 
-  // if (!session) return <>loading...</>;
+  //sign the user out
+  async function onSignOut() {
+    async function signOut() {
+      const { error } = await supabase.auth.signOut()
+
+      if(error) {
+        toast({
+          duration: 6000,
+          variant: "destructive",
+          description: error.message,
+        })
+        throw new Error(error.message)
+      } else {
+        toast({
+          duration: 3000,
+          variant: "success",
+          description: "Logging out now...",
+        });
+        void router.push('/')
+      }
+
+      return { error };
+    }
+    const process = await signOut()
+  }
+  /*
+  const signOutMutation = api.auth.signOut.useMutation({
+    
+    onSuccess: () => {
+      toast({
+        duration: 3000,
+        variant: "success",
+        description: "Logging out now...",
+      });
+      void router.push("/");
+    },
+    onError: (error) =>
+      toast({
+        duration: 6000,
+        variant: "destructive",
+        description: error.message,
+      }),
+  });*/
+  
+  useEffect(() => {
+    if (!session) {
+      void router.push("/");
+    }
+  }, [session, push]);
+
+  if (!session) return <>loading...</>;
 
   return (
     <div
@@ -156,6 +208,7 @@ export function MainNavigation({
           </span>
         </Button>
         <Button
+          onClick={onSignOut}
           variant={"ghost"}
           className={cn("flex w-fit items-center gap-2 text-red-500", {
             "justify-center": !isExpanded,
