@@ -63,6 +63,27 @@ export function SignUpForm({ setSubmitted }: any) {
 
       if(data.session) await supabase.auth.setSession(data.session)
 
+      //register email
+      const betaRegisterMutation = api.email.email_register.useMutation();
+      betaRegisterMutation.mutate(formData, {
+        onSuccess: () => {
+          form.reset();
+          toast({
+            variant: "success",
+            title: "Thank you!",
+            description:
+              "You have successfully registered to be notified for updates and trial testing of pre-release versions",
+          });
+        },
+        onError: (error) =>
+          toast({
+            duration: 6000,
+            variant: "destructive",
+            description: error.message,
+          }),
+      })
+
+
       return { data, error, userExists };
     }
 

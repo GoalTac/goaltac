@@ -22,7 +22,7 @@ import {
 } from "./../components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
 import { d3Types } from "~/components/graph/types";
 import { link } from "fs";
 import Error from "next/error";
@@ -73,9 +73,9 @@ export default function Landing() {
 export function Main() {
   return (
     <section className="text-black body-font lg:pt-20 flex flex-col gap-20 ">
-      <div className="w-full pt-20 mb-96 mx-auto lg:px-4 lg:py-4">
+      <div className="w-full pt-20 md:mb-48 mx-auto lg:px-4 lg:py-4">
 
-      <div className="md:justify-between flex flex-col md:flex-row mx-auto">
+        <div className="md:justify-between flex flex-col md:flex-row mx-auto">
           {/* The description of goaltac */}
           <div className="flex flex-col max-w-2xl mb-2 text-center mx-10">
             <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 lg:text-6xl md:text-5xl">
@@ -88,9 +88,9 @@ export function Main() {
               GoalTac is a social networking application to help you grow quality professional relationships through your mutual connections.
             </p>
           </div>
-          <div className='mt-auto md:mr-20'>
-            <div className="w-full mx-auto h-min dark:border dark:border-gray-700 dark:bg-gray-800 w-min md:mt-14 xl:p-0">
-              <BetaSignUp/>
+          <div className='w-full mx-auto mt-20 md:mt-0 md:mr-20'>
+            <div className="flex justify-center dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-14 xl:p-0">
+                <BetaSignUp/>
             </div>
           </div>
           
@@ -336,15 +336,18 @@ function InteractiveGraph() {
                             <Input type='text' className="text-black"
                             placeholder="Enter someone to connect from" {...field} />
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent>
-                            <DropdownMenuRadioGroup className="overflow-auto h-48 max-h-full" value={form.getValues().source} onValueChange={(value)=>form.setValue('source', value)}>
-                              {nodes.map((node: { id: string, group: number})=>{
-                                return <DropdownMenuRadioItem key={node.id} value={node.id}>
-                                  {node.id}
-                                </DropdownMenuRadioItem>
-                              })}
-                            </DropdownMenuRadioGroup>
-                          </DropdownMenuContent>
+                          <DropdownMenuPortal>
+                            <DropdownMenuContent>
+                              <DropdownMenuRadioGroup className="overflow-auto h-48 max-h-full" value={form.getValues().source} onValueChange={(value)=>form.setValue('source', value)}>
+                                {nodes.map((node: { id: string, group: number})=>{
+                                  return <DropdownMenuRadioItem key={node.id} value={node.id}>
+                                    {node.id}
+                                  </DropdownMenuRadioItem>
+                                })}
+                              </DropdownMenuRadioGroup>
+                            </DropdownMenuContent>
+                          </DropdownMenuPortal>
+                         
                         </DropdownMenu>
                       </FormControl>
                       <FormMessage />

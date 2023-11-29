@@ -1,53 +1,32 @@
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
-/**
- * Need to finish the email router stuff
- */
-const resend = new Resend(process.env.RESEND_API_KEY);
-let example = {
-  id: 1,
-  name: "Hello World",
-};
+import { supabase } from "~/utils/supabaseClient";
 
 export const emailRouter = createTRPCRouter({
-  sendForgotPassword: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
+  email_register: publicProcedure
+    .input(z.object({ email: z.string() }))
+    .mutation(async({ input }) => {
+        
+        console.log(input.email)
+        //automatically sets update preferences to true because of supabase
+        const { data, error } = await supabase.from('emails').upsert({
+            email: input.email
+        })
+        console.log(data,error)
 
-  sendWelcome: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
+        //check for duplicate registration
+        if(error?.code == '23505') {
+            throw new Error('You have already registered')
+        }
+
+        if(error) {
+            console.log(error.code)
+            throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
+        }
   
-  sendVerification: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
-  create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ input }) => {
-      // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      example = { id: example.id + 1, name: input.name };
-      return example;
-    }),
-
-  getLatest: publicProcedure.query(() => {
-    return example;
-  }),
+        return { data, error };
+    })
 });
