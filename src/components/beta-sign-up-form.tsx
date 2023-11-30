@@ -40,7 +40,7 @@ export function BetaSignUp() {
     },
   });
 
-  async function onSubmit(formData: z.infer<typeof formSchema>) {
+  function onSubmit(formData: z.infer<typeof formSchema>) {
     betaRegisterMutation.mutate(formData, {
         onSuccess: () => {
           form.reset();
