@@ -3,7 +3,7 @@ import { FaLinkedin } from "react-icons/fa";
 export default function Footer() {
   return (
     <footer>
-      <div className="max-w-6xl items-center md:items-start flex flex-col px-4 sm:px-6 border-t border-gray-200 pt-4 md:pt-8">
+      <div className="max-w-6xl pb-10 items-center md:items-start flex flex-col px-4 sm:px-6 border-t border-gray-200 pt-4 md:pt-8">
         {/* 1st block */}
         <div className="sm:col-span-12 lg:col-span-3">
             <img src="/name_logo.png"

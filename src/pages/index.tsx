@@ -48,7 +48,7 @@ import Footer from "~/components/landingPage/footer";
  * @returns 
  */
 export default function Landing() {
-
+//bg-no-repeat bg-center bg-contain bg-[url('/network_background.png')]
   const router = useRouter()
 
   return (
@@ -56,12 +56,19 @@ export default function Landing() {
       <div className="w-full bg-no-repeat bg-contain bg-[url('/wave.svg')]">
         {/* Header */}
         <Header/>
-        <div className="container flex-col gap-12 px-4 py-16">
+        <div className="container flex-col gap-12 px-4 py-16 md:pt-32 pt-24">
           <Main />
           <Newsletter/>
           {/* Footer */}
-          <Footer/>
         </div>
+        <div className="bg-gray-100">
+          <div className="container">
+            <Footer/>
+          </div>
+        </div>
+        
+        
+
       </div>
     </main>
   );
@@ -72,40 +79,38 @@ export default function Landing() {
 //for the main body of the landing page
 export function Main() {
   return (
-    <section className="text-black body-font lg:pt-20 flex flex-col gap-20 ">
-      <div className="w-full pt-20 md:mb-48 mx-auto lg:px-4 lg:py-4">
+    <section className="text-black body-font flex flex-col gap-20">
+      <div className="w-full mx-auto lg:px-4 lg:py-4">
 
-        <div className="md:justify-between flex flex-col md:flex-row mx-auto">
+        <div className="md:justify-between flex flex-col md:flex-row mx-auto gap-12 md:gap-0">
           {/* The description of goaltac */}
-          <div className="flex flex-col  mb-2 text-center">
-            <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 lg:text-6xl md:text-5xl">
-              <span>Build Your</span>
-              <br className="hidden md:block"></br>
-              {' '}True Network
-            </h1>
-            <br></br>
-            <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 sm:w-2/3 w-full">
-              GoalTac is a social networking application to help you grow quality professional relationships through your mutual connections. 
-            </p>
-          </div>
-          <div className="w-full flex flex-row justify-center items-center mt-12 md:mt-0">
-            <div className="min-w-[20rem]">
-              <div className='items-center flex flex-row'>
-                <Image src="/rocket.svg"
-                  width={80}
-                  height={80}
-                  className=""
-                  alt="GoalTac Logo"/>
-                <h3 className="mb-4 text-3xl font-bold text-black tracking-tighter text-gray-900 2xl:text-4xl lg:text-3xl">
-                  <span>Coming Soon!</span>
-                </h3>
+          <div className="md:gap-12 flex flex-col">
+            <div className="flex flex-col  mb-2 text-center">
+              <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 md:text-5xl">
+                <span>Build high</span>
+                <br className="hidden md:block"></br>
+                {' '}quality networks
+              </h1>
+              <br></br>
+              <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 sm:w-2/3 w-full">
+                Your networking application to discover and build genuine professional relationships through mutual connections.
+              </p>
+            </div>
+            <div className="flex flex-row justify-center items-center mt-12 md:mt-0">
+              <div className="min-w-[20rem]">
+                  <BetaSignUp/>
               </div>
-                
-                <BetaSignUp/>
             </div>
           </div>
-          
+          <div className="mx-auto md:pr-12">
+              <Image src="/network_example.svg"
+                width={400}
+                height={400}
+                className=""
+                alt="Networking example"/>
+          </div>
         </div>
+          
       </div>
         
       <div className="hidden lg:block mx-auto ">
@@ -127,7 +132,7 @@ export function Main() {
                     They are the circles within your network diagram representing the people you have met and your relative connection quality based on interactions.
                   </p>
                   <div className="flex flex-row gap-4 py-4 w-full pt-8">
-                    <p className="font-black text-2xl">SIZE</p>
+                    <p className="font-black text-2xl">SIZE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                     <p className="text-lg text-left">
                       Represents the quality of the connection between you and the person by tracking the amount of introductions made with them and chat messages exchanged. 
                     </p>
@@ -180,7 +185,7 @@ export function Main() {
       </section>
 
       <section className="text-gray-600 body-font">
-        <div className="container px-5 py-24 w-full">
+        <div className="container px-5 w-full">
           <div className="mx-auto flex flex-wrap justify-center text-center">
             <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
@@ -242,7 +247,7 @@ export function Main() {
             <h2 className="sm:text-5xl font-medium title-font text-black mb-4">
               Our Team
             </h2>
-            <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500s">
+            <p className="text-xl leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500">
               Here is our company
             </p>
             <div className="w-full py-12">
