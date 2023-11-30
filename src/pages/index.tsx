@@ -178,7 +178,7 @@ export function Main() {
           </div>
         </div>
       </section>
-      
+
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 w-full">
           <div className="mx-auto flex flex-wrap justify-center text-center">
@@ -235,6 +235,7 @@ export function Main() {
           </div>
         </div>
       </section>
+      
       <section className="text-gray-600 body-font">
         <div className="container px-5 mx-auto">
           <div className="text-center mb-20">
