@@ -117,7 +117,7 @@ export function Main() {
       <section className="text-gray-600 body-font">
         <div className="container px-5 w-full">
           <div className="flex flex-col items-center gap-12">
-            <div className="flex md:flex-row flex-col text-center items-center md:items-start border">
+            <div className="flex md:flex-row flex-col text-center items-center md:items-start">
               <Image src="/Link_network.svg"
                 width={300}
                 height={300}
