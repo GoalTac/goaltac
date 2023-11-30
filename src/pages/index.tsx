@@ -198,7 +198,7 @@ export function Main() {
                   Quality Relationships
                 </h2>
                 <p className="leading-relaxed text-lg">
-                  Send silent connection requests to potential connections and interact with your network regularly to keep up your network's status
+                  Send silent connection requests to potential connections and interact with your network regularly to keep up your network status
                 </p>
               </div>
             </div>
@@ -305,7 +305,7 @@ export function Main() {
                     </h2>
                     <h3 className="text-gray-500 mb-3">Web Developer</h3>
                     <p className="mb-4 max-w-sm">
-                      I am a junior at UConn, pursuing a major in Psychological Sciences and a minor in Cognitive Science. I am highly motivated to work in the realms of human resources and/or data science, with a few years of programming experience, namely in Java and C++, but most recently in Python, which is the language I'm most comfortable in
+                      I am a junior at UConn, pursuing a major in Psychological Sciences and a minor in Cognitive Science. I am highly motivated to work in the realms of human resources and/or data science, with a few years of programming experience, namely in Java and C++, but most recently in Python, which is the language I am most comfortable in
                     </p>
                   </div>
                 </div>
