@@ -123,7 +123,7 @@ export function Main() {
         <div className="container px-5 w-full">
           <div className="flex flex-col items-center gap-12">
             <div className="flex md:flex-row flex-col-reverse gap-12 text-center items-center md:items-start">
-              <div className="flex flex-col mb-10 items-center">
+              <div className="flex flex-col md:mb-10 items-center">
                 <div className="flex-grow max-w-md">
                   <h2 className="text-gray-700 font-black text-4xl mb-3">
                     Nodes
@@ -131,15 +131,15 @@ export function Main() {
                   <p className="leading-relaxed text-lg">
                     They are the circles within your network diagram representing the people you have met and your relative connection quality based on interactions.
                   </p>
-                  <div className="flex flex-row gap-4 py-4 w-full pt-8">
-                    <p className="font-black text-2xl">SIZE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                    <p className="text-lg text-left">
+                  <div className="flex flex-col md:flex-row gap-4 py-4 w-full pt-8">
+                    <p className="font-black text-2xl md:text-left md:w-2/3">SIZE</p>
+                    <p className="text-lg text-center md:text-left">
                       Represents the quality of the connection between you and the person by tracking the amount of introductions made with them and chat messages exchanged. 
                     </p>
                   </div>
-                  <div className="flex flex-row gap-4 py-4 w-full">
+                  <div className="flex flex-col md:flex-row gap-4 py-4 w-full">
                     <p className="font-black text-2xl">COLOR</p>
-                    <p className="text-lg text-left">
+                    <p className="text-lg text-center md:text-left">
                       Used to filter and organize connections into categories of interest, or to denote people of interest during search.
                     </p>
                   </div>
@@ -157,7 +157,7 @@ export function Main() {
                 height={300}
                 className=""
                 alt="GoalTac Logo"/>
-              <div className="flex flex-col mb-10 items-center">
+              <div className="flex flex-col md:mb-10 items-center">
                 <div className="flex-grow max-w-md">
                   <h2 className="text-gray-700 font-black text-4xl mb-3">
                     Links
@@ -165,15 +165,15 @@ export function Main() {
                   <p className="leading-relaxed text-lg">
                     The lines drawn between two nodes represent the relationship two people have within your network.
                   </p>
-                  <div className="flex flex-row gap-4 py-4 w-full pt-8">
+                  <div className="flex flex-col md:flex-row  gap-4 py-4 w-full pt-8">
                     <p className="font-black text-2xl">WIDTH</p>
-                    <p className="text-lg text-left">
+                    <p className="text-lg text-center md:text-left">
                       The width of the line represents the strength of the relationships your connections have with one another. It becomes thinner the less they interact with one another until it may disappear.
                     </p>
                   </div>
-                  <div className="flex flex-row gap-4 py-4 w-full">
+                  <div className="flex flex-col md:flex-row  gap-4 py-4 w-full">
                     <p className="font-black text-2xl">COLOR</p>
-                    <p className="text-lg text-left">
+                    <p className="text-lg text-center md:text-left">
                       Used to filter and organize people of interest in relation to each other. When introducing two connections to each other, colors can denote commonalities of interest.
                     </p>
                   </div>
