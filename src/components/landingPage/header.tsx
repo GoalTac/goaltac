@@ -42,9 +42,8 @@ export default function Header() {
               alt="GoalTac Logo"/> }
           </div>
 
-          {/* Desktop navigation */}
+          {/* Desktop navigation 
           <nav className="hidden md:flex md:grow">
-            {/* Desktop sign in links */}
             <ul className="flex gap-3 grow justify-end flex-wrap items-center">
               <li>
                 <Button onClick={()=>router.push('/login')}
@@ -62,7 +61,7 @@ export default function Header() {
 
           </nav>
 
-          <MobileMenu />
+          <MobileMenu />*/}
 
         </div>
       </div>
