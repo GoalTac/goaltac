@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
@@ -17,12 +18,17 @@ export default function Footer() {
         <div className="md:flex md:justify-between pt-4 md:w-full justify-center">
 
           {/* Copyrights note */}
-          <div className='flex flex-col md:flex-row gap-4 md:w-full mx-auto'>
-            <div className="text-sm text-gray-600 w-full">&copy; GoalTac.net. All rights reserved.</div>
+          <div className='flex flex-col md:flex-row gap-4 md:w-full mx-auto text-center md:text-left'>
+            <div className="text-sm text-gray-600 w-full">
+              <p className="mb-1">&copy; GoalTac.net. All rights reserved.</p>
+              <p className="gap-2 flex flex-row">
+                <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Terms</a> · 
+                <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Privacy Policy</a> · 
+                <p onClick={()=>{document.location = "mailto:goaltac@gmail.com";}} className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Email Us</p>
+              </p>
+            </div>
             <div className='flex flex-col sm:mx-auto sm:flex-row w-full text-center'>
-                <div className="text-sm text-gray-600">
-                    <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Terms</a> · <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Privacy Policy</a>
-                </div>
+                
                 <ul className="flex ml-auto">
                     <li>
                     <a target='_blank' href="https://www.linkedin.com/company/92931369/" className="p-2 text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-100 rounded-full shadow transition duration-150 ease-in-out" aria-label="Twitter">

@@ -46,6 +46,18 @@ export default function Header() {
               alt="GoalTac Logo"/> }
           </div>
 
+          <div className='items-center flex-row hidden sm:flex'>
+              
+              <h3 className={!top ? 'bg-gradient-to-r from-blue-600 to-indigo-400 inline-block text-transparent bg-clip-text font-black' : 'text-black font-black'}>
+                <span>COMING SOON</span>
+              </h3>
+              <Image src="/rocket.svg"
+                width={60}
+                height={60}
+                className=""
+                alt="GoalTac Logo"/>
+            </div>
+
           {/* Desktop navigation 
           <nav className="hidden md:flex md:grow">
             <ul className="flex gap-3 grow justify-end flex-wrap items-center">
