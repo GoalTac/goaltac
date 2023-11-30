@@ -117,32 +117,27 @@ export function Main() {
       <section className="text-gray-600 body-font">
         <div className="container px-5 w-full">
           <div className="flex flex-col items-center gap-12">
-            <div className="flex md:flex-row flex-col text-center items-center md:items-start">
-              <Image src="/Link_network.svg"
-                width={300}
-                height={300}
-                className=""
-                alt="GoalTac Logo"/>
+            <div className="flex md:flex-row flex-col-reverse gap-12 text-center items-center md:items-start">
               <div className="flex flex-col mb-10 items-center">
-                <div className="flex-grow max-w-sm">
-                  <h2 className="text-black text-2xl title-font font-medium mb-3">
-                    Easy Networking
+                <div className="flex-grow max-w-md">
+                  <h2 className="text-gray-700 font-black text-4xl mb-3">
+                    Nodes
                   </h2>
                   <p className="leading-relaxed text-lg">
-                    Request introductions from your mutual connections to meet with people of interest
+                    They are the circles within your network diagram representing the people you have met and your relative connection quality based on interactions.
                   </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex md:flex-row flex-col-reverse text-center items-center md:items-start">
-              <div className="flex flex-col mb-10 items-center">
-                <div className="flex-grow max-w-sm">
-                  <h2 className="text-black text-2xl title-font font-medium mb-3">
-                    Easy Networking
-                  </h2>
-                  <p className="leading-relaxed text-lg">
-                    Request introductions from your mutual connections to meet with people of interest
-                  </p>
+                  <div className="flex flex-row gap-4 py-4 w-full pt-8">
+                    <p className="font-black text-2xl">SIZE</p>
+                    <p className="text-lg text-left">
+                      Represents the quality of the connection between you and the person by tracking the amount of introductions made with them and chat messages exchanged. 
+                    </p>
+                  </div>
+                  <div className="flex flex-row gap-4 py-4 w-full">
+                    <p className="font-black text-2xl">COLOR</p>
+                    <p className="text-lg text-left">
+                      Used to filter and organize connections into categories of interest, or to denote people of interest during search.
+                    </p>
+                  </div>
                 </div>
               </div>
               <Image src="/Node_network.svg"
@@ -150,6 +145,35 @@ export function Main() {
                 height={300}
                 className=""
                 alt="GoalTac Logo"/>
+            </div>
+            <div className="flex md:flex-row flex-col gap-12 text-center items-center md:items-start">
+              <Image src="/Link_network.svg"
+                width={300}
+                height={300}
+                className=""
+                alt="GoalTac Logo"/>
+              <div className="flex flex-col mb-10 items-center">
+                <div className="flex-grow max-w-md">
+                  <h2 className="text-gray-700 font-black text-4xl mb-3">
+                    Links
+                  </h2>
+                  <p className="leading-relaxed text-lg">
+                    The lines drawn between two nodes represent the relationship two people have within your network.
+                  </p>
+                  <div className="flex flex-row gap-4 py-4 w-full pt-8">
+                    <p className="font-black text-2xl">WIDTH</p>
+                    <p className="text-lg text-left">
+                      The width of the line represents the strength of the relationships your connections have with one another. It becomes thinner the less they interact with one another until it may disappear.
+                    </p>
+                  </div>
+                  <div className="flex flex-row gap-4 py-4 w-full">
+                    <p className="font-black text-2xl">COLOR</p>
+                    <p className="text-lg text-left">
+                      Used to filter and organize people of interest in relation to each other. When introducing two connections to each other, colors can denote commonalities of interest.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
