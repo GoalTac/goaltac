@@ -52,8 +52,8 @@ export default function Landing() {
   const router = useRouter()
 
   return (
-    <main className="flex min-h-screen w-screen flex-col bg-white bg-no-repeat bg-contain bg-[url('/wave.svg')]">
-      <div className='w-full'>
+    <main className="flex min-h-screen w-screen flex-col bg-white">
+      <div className="w-full bg-no-repeat bg-contain bg-[url('/wave.svg')]">
         {/* Header */}
         <Header/>
         <div className="container flex-col gap-12 px-4 py-16">
@@ -77,19 +77,30 @@ export function Main() {
 
         <div className="md:justify-between flex flex-col md:flex-row mx-auto">
           {/* The description of goaltac */}
-          <div className="flex flex-col max-w-2xl mb-2 text-center mx-10">
+          <div className="flex flex-col  mb-2 text-center">
             <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 lg:text-6xl md:text-5xl">
               <span>Build Your</span>
               <br className="hidden md:block"></br>
               {' '}True Network
             </h1>
             <br></br>
-            <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 lg:w-2/3">
-              GoalTac is a social networking application to help you grow quality professional relationships through your mutual connections.
+            <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 sm:w-2/3 w-full">
+              GoalTac is a social networking application to help you grow quality professional relationships through your mutual connections. 
             </p>
           </div>
-          <div className='w-full mx-auto mt-20 md:mt-0 md:mr-20'>
-            <div className="max-w-[20rem] flex justify-center dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-14 xl:p-0">
+          <div className="w-full flex flex-row justify-center items-center mt-12 md:mt-0">
+            <div className="min-w-[20rem]">
+              <div className='items-center flex flex-row'>
+                <Image src="/rocket.svg"
+                  width={80}
+                  height={80}
+                  className=""
+                  alt="GoalTac Logo"/>
+                <h3 className="mb-4 text-3xl font-bold text-black tracking-tighter text-gray-900 2xl:text-4xl lg:text-3xl">
+                  <span>Coming Soon!</span>
+                </h3>
+              </div>
+                
                 <BetaSignUp/>
             </div>
           </div>
@@ -103,16 +114,49 @@ export function Main() {
         </h3>
         <InteractiveGraph/>
       </div>
+      <section className="text-gray-600 body-font">
+        <div className="container px-5 w-full">
+          <div className="flex flex-col items-center gap-12">
+            <div className="flex md:flex-row flex-col text-center items-center md:items-start border">
+              <Image src="/Link_network.svg"
+                width={300}
+                height={300}
+                className=""
+                alt="GoalTac Logo"/>
+              <div className="flex flex-col mb-10 items-center">
+                <div className="flex-grow max-w-sm">
+                  <h2 className="text-black text-2xl title-font font-medium mb-3">
+                    Easy Networking
+                  </h2>
+                  <p className="leading-relaxed text-lg">
+                    Request introductions from your mutual connections to meet with people of interest
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex md:flex-row flex-col-reverse text-center items-center md:items-start">
+              <div className="flex flex-col mb-10 items-center">
+                <div className="flex-grow max-w-sm">
+                  <h2 className="text-black text-2xl title-font font-medium mb-3">
+                    Easy Networking
+                  </h2>
+                  <p className="leading-relaxed text-lg">
+                    Request introductions from your mutual connections to meet with people of interest
+                  </p>
+                </div>
+              </div>
+              <Image src="/Node_network.svg"
+                width={300}
+                height={300}
+                className=""
+                alt="GoalTac Logo"/>
+            </div>
+          </div>
+        </div>
+      </section>
       
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 w-full">
-          {/*<div className="lg:w-1/2 w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
-            <img src="/name_logo.png"
-                width=''
-                height={40}
-                className="object-cover object-center h-full w-full"
-                alt="GoalTac Logo"/>
-           </div>*/}
           <div className="mx-auto flex flex-wrap justify-center text-center">
             <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
@@ -186,13 +230,32 @@ export function Main() {
                     <h2 className="title-font font-medium text-lg text-black">
                       My Phung
                     </h2>
-                    <h3 className="text-gray-500 mb-3">Web Developer</h3>
+                    <h3 className="text-gray-500 mb-3">Cofounder</h3>
                     <p className="mb-4 max-w-sm">
                       I am a highly motivated and innovative individual with a deep passion for problem-solving. My academic journey in economics and computer science has honed my analytical thinking and interdisciplinary approach to challenges. Entrepreneurial by nature, I thrive on leading teams and developing solutions that drive positive change. With strong technical skills, I am always eager to explore new horizons and make a meaningful impact.
                     </p>
                     
                   </div>
                 </div>
+                  <div className="h-full flex flex-col items-center text-center">
+                    <div className="h-[19rem] flex flex-end">
+                      <img alt="team" width={300} height={300}
+                        className="flex-shrink-0 rounded-lg object-cover object-center"
+                        src="/Jamison.png"
+                      ></img>
+                    </div>
+                    
+                    <div className="w-full">
+                      <h2 className="title-font font-medium text-lg text-black">
+                        Jamison Coté
+                      </h2>
+                      <h3 className="text-gray-500 mb-3">Cofounder</h3>
+                      <p className="mb-4 max-w-sm">
+                      Creative Visionary and Data-Driven Designer | I once co-developed a mental health platform that gained 400 users in less than 4 months while a fulltime student. I also designed an autofill browser extension that reduced form filling time by 60%. I love understanding how people think/interact with the world and turning those insights into delightful designs.
+                      </p>
+                  </div>
+                </div>
+                
                 <div className="h-full flex flex-col items-center text-center">
                 <img
                     alt="team" width={300} height={300}
@@ -202,26 +265,11 @@ export function Main() {
                     <h2 className="title-font font-medium text-lg text-black">
                       Nikhil Ghosh
                     </h2>
-                    <h3 className="text-gray-500 mb-3">Web Developer</h3>
+                    <h3 className="text-gray-500 mb-3">Business Development</h3>
                     <p className="mb-4 max-w-sm">
                       I am a purpose-driven individual studying computer science at the University of Connecticut. I also teach, innovate, volunteer, and try to grow. Well-being and relationships are most important to me, and I enjoy meeting people and exploring. 
                     </p>
                     
-                </div>
-                </div>
-                <div className="h-full flex flex-col items-center text-center">
-                  <img alt="team" width={300} height={300}
-                    className="flex-shrink-0 rounded-lg object-cover object-center mb-4"
-                    src="/Jamison.png"
-                  ></img>
-                  <div className="w-full">
-                    <h2 className="title-font font-medium text-lg text-black">
-                      Jamison Coté
-                    </h2>
-                    <h3 className="text-gray-500 mb-3">Web Developer</h3>
-                    <p className="mb-4 max-w-sm">
-                    Creative Visionary and Data-Driven Designer | I once co-developed a mental health platform that gained 400 users in less than 4 months while a fulltime student. I also designed an autofill browser extension that reduced form filling time by 60%. I love understanding how people think/interact with the world and turning those insights into delightful designs.
-                    </p>
                 </div>
                 </div>
                 <div className="h-full flex flex-col items-center text-center">
