@@ -266,7 +266,7 @@ export function Main() {
                     <div className="h-[19rem] flex flex-end">
                       <img alt="team" width={300} height={300}
                         className="flex-shrink-0 rounded-lg object-cover object-center"
-                        src="/Jamison.png"
+                        src="/jamison.png"
                       ></img>
                     </div>
                     
