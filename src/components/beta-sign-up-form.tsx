@@ -31,7 +31,7 @@ export function BetaSignUp() {
   const router = useRouter();
   const supabase = useSupabaseClient()
 
-  const signInEmailMutation = api.auth.signInEmail.useMutation();
+  const betaRegisterMutation = api.email.email_register.useMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,16 +41,30 @@ export function BetaSignUp() {
   });
 
   async function onSubmit(formData: z.infer<typeof formSchema>) {
-
+    betaRegisterMutation.mutate(formData, {
+        onSuccess: () => {
+          form.reset();
+          toast({
+            variant: "success",
+            title: "Thank you!",
+            description:
+              "You have successfully registered to be notified for updates and trial testing of pre-release versions",
+          });
+        },
+        onError: (error) => {
+            form.setError("email", { type: 'custom', message: error.message });
+            setTimeout(()=>{
+                form.clearErrors("email")
+            },6000)
+        }
+      })
   }
 
   return (
-    <div className="grid gap-2 w-min">
+    <div className="grid gap-2 w-full h-min">
       <div className="shadow-lg space-y-2 p-4 sm:p-6 md:space-y-4 bg-white rounded-lg">
         <h1 className="text-lg text-center mx-auto leading-tight tracking-tight text-gray-800 font-small dark:text-white md:text-lg">
-            <span>Be the first to</span>
-            <br className="hidden md:block"></br>
-            {' '}build your network
+            <span>Register to be selected to try</span>
         </h1>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -73,7 +87,7 @@ export function BetaSignUp() {
                 </div>
                 <Button
                 type="submit"
-                disabled={signInEmailMutation.isLoading}
+                disabled={betaRegisterMutation.isLoading}
                 className="gap-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg px-5 py-5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 bg-gray-800 hover:bg-gray-900">
                 <PiShareNetwork/>
                 Enter the Network

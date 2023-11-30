@@ -47,7 +47,7 @@ export default class Graph extends React.Component<Props, {}> {
     //updates the links
     this.simulation.force("link").links(this.props.graph.links);
 
-    this.simulation.alphaTarget(0).restart()
+    this.simulation.alphaTarget(0.1).restart()
 
     return (<svg className="border border-black bg-white"
         width={this.props.width} height={this.props.height}>
@@ -91,14 +91,14 @@ export default class Graph extends React.Component<Props, {}> {
     //prevents escaping from the prison
     node
     .attr("cx", function(d: any) { 
-      const xVal = validate(d.x, 0, 800)
+      const xVal = validate(d.x, 12, 788)
       
       //to update the labels
       if (d.x != xVal) d.y = xVal
       return xVal;
     })
     .attr("cy", function(d: any) { 
-      const yVal = validate(d.y, 0, 600)
+      const yVal = validate(d.y, 12, 588)
       if (d.y != yVal) d.y = yVal
       return yVal;
     });

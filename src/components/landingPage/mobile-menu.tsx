@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 
 export default function MobileMenu() {
@@ -50,7 +51,6 @@ export default function MobileMenu() {
 
       {/*Mobile navigation */}
       <div ref={mobileNav}>
-        {/*
         <Transition
           show={mobileNavOpen}
           as="nav"
@@ -76,7 +76,7 @@ export default function MobileMenu() {
               </Link>
             </li>
           </ul>          
-  </Transition>*/}
+        </Transition>
       </div>
     </div>
   )
