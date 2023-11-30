@@ -263,12 +263,10 @@ export function Main() {
                   </div>
                 </div>
                   <div className="h-full flex flex-col items-center text-center">
-                    <div className="h-[19rem] flex flex-end">
                       <img alt="team" width={300} height={300}
                         className="flex-shrink-0 rounded-lg object-cover object-center"
                         src="/Jamison.png"
                       ></img>
-                    </div>
                     
                     <div className="w-full">
                       <h2 className="title-font font-medium text-lg text-black">
