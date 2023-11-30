@@ -26,6 +26,10 @@ export default function Header() {
   
   return (
     <header className={`fixed w-full z-30 md:bg-opacity-90 transition duration-100 ease-in-out ${!top ? 'bg-white backdrop-blur-sm shadow-lg' : ''}`}>
+      <meta
+          name="description"
+          content="An online networking application to track, maintain, and build quality professional relationships with people of interest through shared mutual connections."
+        />
       <div className="max-w-6xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
 
