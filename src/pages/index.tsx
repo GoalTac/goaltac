@@ -127,7 +127,7 @@ export function Main() {
                     They are the circles within your network diagram representing the people you have met and your relative connection quality based on interactions.
                   </p>
                   <div className="flex flex-row gap-4 py-4 w-full pt-8">
-                    <p className="font-black text-2xl">SIZE</p>
+                    <p className="font-black text-2xl">SIZE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                     <p className="text-lg text-left">
                       Represents the quality of the connection between you and the person by tracking the amount of introductions made with them and chat messages exchanged. 
                     </p>
