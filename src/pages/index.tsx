@@ -95,14 +95,14 @@ export function Main() {
         <div className="md:justify-between flex flex-col md:flex-row mx-auto gap-12 md:gap-0">
           {/* The description of goaltac */}
           <div className="md:gap-12 flex flex-col">
-            <div className="flex flex-col  mb-2 text-center">
-              <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 md:text-5xl">
+            <div className="flex flex-col mb-2 text-left sm:w-2/3 w-full mx-auto">
+              <h1 className="mb-2 text-4xl font-bold text-left tracking-tighter text-gray-900 md:text-5xl">
                 <span>Build high</span>
                 <br className="hidden md:block"></br>
                 {' '}quality networks
               </h1>
               <br></br>
-              <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 sm:w-2/3 w-full">
+              <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 ">
                 A networking application to discover, build, and maintain genuine professional relationships made with your mutual connections.
               </p>
             </div>
@@ -149,12 +149,17 @@ export function Main() {
             </ul>
           </div>
           <div>
-          <div className="justify-center flex">
-            <h2 className="text-4xl text-gray-800 font-bold mb-8">
-              Our Solutions
-            </h2>
-          </div>
-          <div className="mx-auto flex flex-wrap justify-center text-center">
+          <div className="mx-auto flex flex-wrap justify-center text-left gap-10">
+            <div className="flex flex-col mb-10 items-center">
+              <div className="flex-grow max-w-sm">
+                <h2 className="text-black text-2xl title-font font-medium mb-3">
+                  Our Solutions
+                </h2>
+                <p className="leading-relaxed text-lg">
+                  Tracking and maintaining the quality of your personal network, and meeting new professionals through your mutual connections.
+                </p>
+              </div>
+            </div>
             <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">

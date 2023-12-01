@@ -21,10 +21,10 @@ export default function Footer() {
           <div className='flex flex-col md:flex-row gap-4 md:w-full mx-auto text-center md:text-left'>
             <div className="text-sm text-gray-600 w-full">
               <p className="mb-1">&copy; GoalTac.net. All rights reserved.</p>
-              <p className="gap-2 flex flex-row">
-                <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Terms</a> · 
-                <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Privacy Policy</a> · 
-                <p onClick={()=>{document.location = "mailto:goaltac@gmail.com";}} className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Email Us</p>
+                <p className="gap-2 flex flex-row">
+                  <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Terms</a> · 
+                  <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Privacy Policy</a> · 
+                  <p onClick={()=>{document.location = "mailto:goaltac@gmail.com";}} className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Email Us</p>
               </p>
             </div>
             <div className='flex flex-col sm:mx-auto sm:flex-row w-full text-center'>
