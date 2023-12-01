@@ -93,7 +93,7 @@ export function Main() {
               </h1>
               <br></br>
               <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 sm:w-2/3 w-full">
-                Your networking application to discover and build genuine professional relationships through mutual connections.
+                A networking application to discover, build, and maintain genuine professional relationships made with your mutual connections.
               </p>
             </div>
             <div className="flex flex-row justify-center items-center mt-12 md:mt-0">
@@ -119,6 +119,87 @@ export function Main() {
         </h3>
         <InteractiveGraph/>
       </div>
+
+      <section className="text-gray-600 body-font">
+        <div className="container px-5 w-full">
+          <div className="flex flex-col md:flex-row mb-10 justify-center items-center border border-8 bg-gray-200 rounded-md p-4">
+            <h1 className="max-w-xs text-gray-900 text-center text-xl font-bold mb-3">
+              Common problems young professionals experience in modern networking
+            </h1>
+            <ul className="square flex-grow max-w-md text-left gap-2 flex flex-col">
+              <li className="text-gray-700">
+                It can be awkward or intimidating reaching out to people
+              </li>
+              <li className="text-gray-700">
+               A lot of time is spent trying to find people of interest who have been in your extended network all along
+              </li>
+              <li className="text-gray-700">
+                Difficulty in tracking and maintaining the quality of important professional relationships
+              </li>
+            </ul>
+          </div>
+          <div>
+          <div className="justify-center flex">
+            <h2 className="text-4xl text-gray-800 font-bold mb-8">
+              Our Solutions
+            </h2>
+          </div>
+          <div className="mx-auto flex flex-wrap justify-center text-center">
+            <div className="flex flex-col mb-10 items-center">
+              <div className="flex-grow max-w-sm">
+                <h2 className="text-black text-2xl title-font font-medium mb-3">
+                  Easy Networking
+                </h2>
+                <p className="leading-relaxed text-lg">
+                  Request introductions from your mutual connections to meet with people of interest
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col mb-10 items-center">
+              <div className="flex-grow max-w-sm">
+                <h2 className="text-black text-2xl title-font font-medium mb-3">
+                  Quality Relationships
+                </h2>
+                <p className="leading-relaxed text-lg">
+                  Send silent connection requests to potential connections and interact with your network regularly to keep up your network status
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col mb-10 items-center">
+              <div className="flex-grow max-w-sm">
+                <h2 className="text-black text-2xl title-font font-medium mb-3">
+                  Discover Real People
+                </h2>
+                <p className="leading-relaxed text-lg">
+                  Use AI to search through the professional background of your network and extended connections
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col mb-10 items-center">
+              <div className="flex-grow max-w-sm">
+                <h2 className="text-black text-2xl title-font font-medium mb-3">
+                  Fun and Engaging
+                </h2>
+                <p className="leading-relaxed text-lg">
+                  Networking is gamified to incentivize reaching out to new connections and building the relationship of current ones 
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col mb-10 items-center">
+              <div className="flex-grow max-w-sm">
+                <h2 className="text-black text-2xl title-font font-medium mb-3">
+                  Visually Stunning
+                </h2>
+                <p className="leading-relaxed text-lg">
+                  Truly understand the strength and value of your connections in a visual way that makes sense
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
       <section className="text-gray-600 body-font">
         <div className="container px-5 w-full">
           <div className="flex flex-col items-center gap-12">
@@ -178,63 +259,6 @@ export function Main() {
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="text-gray-600 body-font">
-        <div className="container px-5 w-full">
-          <div className="mx-auto flex flex-wrap justify-center text-center">
-            <div className="flex flex-col mb-10 items-center">
-              <div className="flex-grow max-w-sm">
-                <h2 className="text-black text-2xl title-font font-medium mb-3">
-                  Easy Networking
-                </h2>
-                <p className="leading-relaxed text-lg">
-                  Request introductions from your mutual connections to meet with people of interest
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col mb-10 items-center">
-              <div className="flex-grow max-w-sm">
-                <h2 className="text-black text-2xl title-font font-medium mb-3">
-                  Quality Relationships
-                </h2>
-                <p className="leading-relaxed text-lg">
-                  Send silent connection requests to potential connections and interact with your network regularly to keep up your network status
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col mb-10 items-center">
-              <div className="flex-grow max-w-sm">
-                <h2 className="text-black text-2xl title-font font-medium mb-3">
-                  Discover Real People
-                </h2>
-                <p className="leading-relaxed text-lg">
-                  Use AI to search through the professional background of your network and extended connections
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col mb-10 items-center">
-              <div className="flex-grow max-w-sm">
-                <h2 className="text-black text-2xl title-font font-medium mb-3">
-                  Fun and Engaging
-                </h2>
-                <p className="leading-relaxed text-lg">
-                  Networking is gamified to incentivize reaching out to new connections and building the relationship of current ones 
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col mb-10 items-center">
-              <div className="flex-grow max-w-sm">
-                <h2 className="text-black text-2xl title-font font-medium mb-3">
-                  Visually Stunning
-                </h2>
-                <p className="leading-relaxed text-lg">
-                  Map the strength and number of your connections through stunning network graphs
-                </p>
               </div>
             </div>
           </div>
