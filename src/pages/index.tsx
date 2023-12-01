@@ -30,6 +30,7 @@ import {BetaSignUp} from "~/components/beta-sign-up-form";
 import Header from "~/components/landingPage/header";
 import Newsletter from "~/components/landingPage/newsletter";
 import Footer from "~/components/landingPage/footer";
+import Head from "next/head";
 /**
  * <div className="body-font">
           <div className="container justify-between items-center flex flex-wrap p-5 md:flex-row">
@@ -53,6 +54,15 @@ export default function Landing() {
 
   return (
     <main className="flex min-h-screen w-screen flex-col bg-white">
+      <Head>
+        <title>
+          Networking made easier, stronger, and faster
+        </title>
+        <meta
+          name="description" key="desc"
+          content="An online networking application to track, maintain, and build quality professional relationships with people of interest through shared mutual connections."
+        />
+      </Head>
       <div className="w-full bg-no-repeat bg-contain bg-[url('/wave.svg')]">
         {/* Header */}
         <Header/>
