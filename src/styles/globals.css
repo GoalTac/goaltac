@@ -13,6 +13,22 @@
     stroke: #cbcbcb;
     stroke-opacity: 0.5;
   }
+
+  ul.circle {
+    list-style-type: circle;
+  }
+  
+  ul.square {
+    list-style-type: square;
+  }
+  
+  ol.roman {
+    list-style-type: upper-roman;
+  }
+  
+  ol.letter {
+    list-style-type: lower-alpha;
+  }
   
   .label {
     font-size: 14px;
