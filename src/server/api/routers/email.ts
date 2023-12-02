@@ -1,12 +1,25 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-
+import { Resend } from 'resend';
+import { WelcomeEmailTemplate } from "~/components/email-templates/welcome";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { supabase } from "~/utils/supabaseClient";
 
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export const emailRouter = createTRPCRouter({
-  email_register: publicProcedure
+    send: publicProcedure    
+    .input(z.object({ name: z.string(), email: z.string(), type: z.enum(['welcome']) }))
+    .mutation(async({ input }) => {
+        await resend.emails.send({
+            to: input.email,
+            from: 'email',
+            subject: input.type,
+            text: '',
+            react: WelcomeEmailTemplate({name: input.name})
+        })
+    }),
+    email_register: publicProcedure
     .input(z.object({ email: z.string() }))
     .mutation(async({ input }) => {
         
@@ -28,5 +41,5 @@ export const emailRouter = createTRPCRouter({
         }
   
         return { data, error };
-    })
+    }),
 });
