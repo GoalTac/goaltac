@@ -57,7 +57,7 @@ export default function Landing() {
     <main className="flex min-h-screen w-screen flex-col bg-white">
       <Head>
         <title>
-          Networking made easier, stronger, and faster
+          GoalTac
         </title>
         <link rel="icon" href="/icon_logo.png"/>
         <meta
