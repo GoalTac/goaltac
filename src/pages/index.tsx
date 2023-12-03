@@ -190,7 +190,7 @@ export function Main() {
                   Fun and Engaging
                 </h2>
                 <p className="leading-relaxed text-lg">
-                  A gamified networking application, crazy! The more time that passes that you haven't interacted with someone in your network, the weaker their relationship score to you becomes. Eventually they will disappear from your network. Keep in touch!
+                  A gamified networking application, crazy! The more time that passes that you haven not interacted with someone in your network, the weaker their relationship score to you becomes. Eventually they will disappear from your network. Keep in touch!
                  </p>
               </div>
             </div>

@@ -35,7 +35,7 @@ export const WelcomeEmailTemplate: FC<Readonly<EmailTemplateProps>> = ({
               Welcome!
             </Heading>
             <Text className="text-[14px] leading-[24px] text-black">
-              GoalTac is currently in development. We will send updates and let you know when it's ready for use!
+              GoalTac is currently in development. We will send updates and let you know when it is ready for use!
             </Text>
             <Text className="text-[14px] leading-[24px] text-black">
               Have questions? Contact my.phung@uconn.edu. I would love to chat any time :)
