@@ -105,7 +105,7 @@ export function Main() {
               </h1>
               <br></br>
               <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 ">
-                A gamified networking application to grow and leverage an authentic network of people you met to discover and maintain new connections
+                A gamified networking platform to grow and leverage an authentic network of people you met to discover and maintain new connections
               </p>
               <div className="flex flex-row mt-12 pt-12 md:mt-0 md:justify-left justify-center">
                 <div className="min-w-[20rem]">
