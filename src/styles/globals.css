@@ -25,6 +25,10 @@
   ol.roman {
     list-style-type: upper-roman;
   }
+
+  ol.number {
+    list-style-type: decimal;
+  }
   
   ol.letter {
     list-style-type: lower-alpha;
