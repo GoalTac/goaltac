@@ -1,32 +1,43 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-
+import { Resend } from 'resend';
+import { WelcomeEmailTemplate } from "~/components/email-templates/welcome";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { supabase } from "~/utils/supabaseClient";
 
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export const emailRouter = createTRPCRouter({
-  email_register: publicProcedure
+    send: publicProcedure    
+    .input(z.object({ name: z.string(), email: z.string(), type: z.enum(['Welcome']) }))
+    .mutation(async({ input }) => {
+        const templates = {Welcome: WelcomeEmailTemplate({name: input.name})}
+        await resend.emails.send({
+            to: input.email,
+            from: 'GoalTac <onboarding@resend.dev>',
+            subject: input.type,
+            text: '',
+            react: templates[input.type]
+        })
+    }),
+    email_register: publicProcedure
     .input(z.object({ email: z.string() }))
     .mutation(async({ input }) => {
         
-        console.log(input.email)
         //automatically sets update preferences to true because of supabase
         const { data, error } = await supabase.from('emails').upsert({
             email: input.email
         })
-        console.log(data,error)
 
         //check for duplicate registration
-        if(error?.code == '23505') {
+        if(error?.code == '42501') {
             throw new Error('You have already registered')
         }
 
         if(error) {
-            console.log(error.code)
             throw new TRPCError({code: 'UNAUTHORIZED', message: error.message})
         }
   
         return { data, error };
-    })
+    }),
 });

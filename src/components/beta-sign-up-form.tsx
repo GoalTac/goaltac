@@ -31,7 +31,9 @@ export function BetaSignUp() {
   const router = useRouter();
   const supabase = useSupabaseClient()
 
-  const betaRegisterMutation = api.email.email_register.useMutation();
+  const emailRegistration = api.email;
+  const emailRegister = emailRegistration.email_register.useMutation()
+  const emailSend = emailRegistration.send.useMutation()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,7 +43,7 @@ export function BetaSignUp() {
   });
 
   function onSubmit(formData: z.infer<typeof formSchema>) {
-    betaRegisterMutation.mutate(formData, {
+    emailRegister.mutate(formData, {
         onSuccess: () => {
           form.reset();
           toast({
@@ -50,6 +52,10 @@ export function BetaSignUp() {
             description:
               "You have successfully registered to be notified for updates and trial testing of pre-release versions",
           });
+
+          //now it is successful so lets send the email
+          emailSend.mutate({ name: formData.email, email: formData.email, type: "Welcome"})
+
         },
         onError: (error) => {
             form.setError("email", { type: 'custom', message: error.message });
@@ -90,7 +96,7 @@ export function BetaSignUp() {
                 </div>
                 <Button
                 type="submit"
-                disabled={betaRegisterMutation.isLoading}
+                disabled={emailRegister.isLoading}
                 className="gap-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg px-5 py-5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 bg-gray-800 hover:bg-gray-900">
                 <PiShareNetwork/>
                 Enter the Network

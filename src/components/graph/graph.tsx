@@ -116,13 +116,13 @@ export default class Graph extends React.Component<Props, {}> {
     this.simulation.nodes(this.props.graph.nodes).on("tick", this.tick);
 
     const { width, height } = this.props;
-    const zoom = d3.zoom<SVGSVGElement, unknown>().on('zoom', handleZoom).scaleExtent([1,5]).translateExtent([[0,0],[width,height]])
+    const zoom = d3.zoom<SVGSVGElement, unknown>().on('zoom', handleZoom).scaleExtent([1,10]).translateExtent([[0,0],[width,height]])
     
     function handleZoom(e: { transform: string | number | boolean | readonly (string | number)[] | d3.ValueFn<d3.BaseType, unknown, string | number | boolean | readonly (string | number)[] | null> | null; }) {
         d3.select('svg g').attr('transform', e.transform)
     }
 
-    d3.select<SVGSVGElement, unknown>('svg g').call(zoom)
+    d3.select<SVGSVGElement, unknown>('svg g').call(zoom).attr("transform","translate(-200,-150)scale(1.5,1.5)");
   }
 
 

@@ -31,6 +31,7 @@ import Header from "~/components/landingPage/header";
 import Newsletter from "~/components/landingPage/newsletter";
 import Footer from "~/components/landingPage/footer";
 import Head from "next/head";
+import { toast } from "~/components/ui/use-toast";
 /**
  * <div className="body-font">
           <div className="container justify-between items-center flex flex-wrap p-5 md:flex-row">
@@ -58,6 +59,7 @@ export default function Landing() {
         <title>
           Networking made easier, stronger, and faster
         </title>
+        <link rel="icon" href="/icon_logo.png"/>
         <meta
           name="description" key="desc"
           content="An online networking application to track, maintain, and build quality professional relationships with people of interest through shared mutual connections."
@@ -95,27 +97,28 @@ export function Main() {
         <div className="md:justify-between flex flex-col md:flex-row mx-auto gap-12 md:gap-0">
           {/* The description of goaltac */}
           <div className="md:gap-12 flex flex-col">
-            <div className="flex flex-col mb-2 text-left sm:w-2/3 w-full mx-auto">
-              <h1 className="mb-2 text-4xl font-bold text-left tracking-tighter text-gray-900 md:text-5xl">
+            <div className="flex flex-col mb-2 md:text-left text-center sm:w-2/3 w-full mx-auto">
+              <h1 className="mb-2 text-4xl font-bold tracking-tighter text-gray-900 md:text-5xl">
                 <span>Build high</span>
                 <br className="hidden md:block"></br>
                 {' '}quality networks
               </h1>
               <br></br>
               <p className="text-xl mx-auto font-normal leading-relaxed text-gray-900 dark:text-gray-900 ">
-                A networking application to discover, build, and maintain genuine professional relationships made with your mutual connections.
+                A gamified networking application to grow and leverage an authentic network of people you met to discover and maintain new connections
               </p>
-            </div>
-            <div className="flex flex-row justify-center items-center mt-12 md:mt-0">
-              <div className="min-w-[20rem]">
-                  <BetaSignUp/>
+              <div className="flex flex-row mt-12 pt-12 md:mt-0 md:justify-left justify-center">
+                <div className="min-w-[20rem]">
+                    <BetaSignUp/>
+                </div>
               </div>
             </div>
+            
           </div>
           <div className="mx-auto md:pr-12">
               <Image src="/network_example.svg"
-                width={400}
-                height={400}
+                width={600}
+                height={600}
                 className=""
                 alt="Networking example"/>
           </div>
@@ -125,48 +128,39 @@ export function Main() {
         
       <div className="hidden lg:block mx-auto ">
         <h3 className="mb-4 text-3xl font-bold tracking-tighter text-gray-900 2xl:text-4xl lg:text-3xl">
-          <span>What your network might look like</span>
+          <p>Your Network Visualized</p>
+          <p className="font-normal text-gray-500 text-2xl">- Try connecting two people!</p>
         </h3>
         <InteractiveGraph/>
       </div>
 
       <section className="text-gray-600 body-font">
         <div className="container px-5 w-full">
-          <div className="flex flex-col md:flex-row mb-10 justify-center items-center border border-8 bg-gray-200 rounded-md p-4">
+          <div className="flex flex-col md:flex-row mb-10 justify-center items-center border border-8 bg-gray-200 rounded-md p-6 md:gap-8">
             <h1 className="max-w-xs text-gray-900 text-center text-xl font-bold mb-3">
-              Common problems young professionals experience in modern networking
+              Common difficulties young professionals experience with modern networking
             </h1>
-            <ul className="square flex-grow max-w-md text-left gap-2 flex flex-col">
+            <ol className="number flex-grow max-w-md text-left gap-2 flex flex-col">
               <li className="text-gray-700">
-                It can be awkward or intimidating reaching out to people
+                Awkward or intimidating reaching out to new/old connections
               </li>
               <li className="text-gray-700">
-               A lot of time is spent trying to find people of interest who have been in your extended network all along
+                Looking for people of interest in your extended network can take up a lot of time
               </li>
               <li className="text-gray-700">
-                Difficulty in tracking and maintaining the quality of important professional relationships
+                Manually keeping track and maintaining lasting professional relationships can be inefficient and takes up a lot of time 
               </li>
-            </ul>
+            </ol>
           </div>
           <div>
-          <div className="mx-auto flex flex-wrap justify-center text-left gap-10">
-            <div className="flex flex-col mb-10 items-center">
-              <div className="flex-grow max-w-sm">
-                <h2 className="text-black text-2xl title-font font-medium mb-3">
-                  Our Solutions
-                </h2>
-                <p className="leading-relaxed text-lg">
-                  Tracking and maintaining the quality of your personal network, and meeting new professionals through your mutual connections.
-                </p>
-              </div>
-            </div>
+          <div className="mx-auto flex flex-wrap justify-center text-left md:gap-x-10">
             <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">
                   Easy Networking
                 </h2>
                 <p className="leading-relaxed text-lg">
-                  Request introductions from your mutual connections to meet with people of interest
+                  Build new connections with the help of connections you already know to introduce you to a connection they know. Easily import existing contacts to track interactions manually (or invite them to make it a lot easier!)
                 </p>
               </div>
             </div>
@@ -176,17 +170,17 @@ export function Main() {
                   Quality Relationships
                 </h2>
                 <p className="leading-relaxed text-lg">
-                  Send silent connection requests to potential connections and interact with your network regularly to keep up your network status
+                  Create a close-knit network limited to only people you have met. Network sizes are limited, so you need to be selective about who you want in your circle, and continuous interactions are needed to keep connected
                 </p>
               </div>
             </div>
             <div className="flex flex-col mb-10 items-center">
               <div className="flex-grow max-w-sm">
                 <h2 className="text-black text-2xl title-font font-medium mb-3">
-                  Discover Real People
+                  Discover People to Meet
                 </h2>
                 <p className="leading-relaxed text-lg">
-                  Use AI to search through the professional background of your network and extended connections
+                  Upload your public resume and post hidden experiences to make you discoverable to people who want to meet you, and easily find people of interest within your extended network with our AI search querying. 
                 </p>
               </div>
             </div>
@@ -196,8 +190,8 @@ export function Main() {
                   Fun and Engaging
                 </h2>
                 <p className="leading-relaxed text-lg">
-                  Networking is gamified to incentivize reaching out to new connections and building the relationship of current ones 
-                </p>
+                  A gamified networking application, crazy! The more time that passes that you haven't interacted with someone in your network, the weaker their relationship score to you becomes. Eventually they will disappear from your network. Keep in touch!
+                 </p>
               </div>
             </div>
             <div className="flex flex-col mb-10 items-center">
@@ -206,7 +200,7 @@ export function Main() {
                   Visually Stunning
                 </h2>
                 <p className="leading-relaxed text-lg">
-                  Truly understand the strength and value of your connections in a visual way that makes sense
+                  Truly understand the strength and value of your connections in a visual way that makes sense. We are doing everything with network graphs rather than viewing results through lists. More infromation below!
                 </p>
               </div>
             </div>
@@ -279,16 +273,12 @@ export function Main() {
           </div>
         </div>
       </section>
-      
       <section className="text-gray-600 body-font">
         <div className="container px-5 mx-auto">
           <div className="text-center mb-20">
-            <h2 className="sm:text-5xl font-medium title-font text-black mb-4">
+            <h2 className="sm:text-5xl font-bold title-font text-black mb-4">
               Our Team
             </h2>
-            <p className="text-xl leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500">
-              Here is our company
-            </p>
             <div className="w-full py-12">
               <div className="flex flex-wrap gap-x-20 gap-y-10 justify-center">
                 <div className="h-full flex flex-col items-center text-center">
@@ -299,7 +289,7 @@ export function Main() {
                     <h2 className="title-font font-medium text-lg text-black">
                       My Phung
                     </h2>
-                    <h3 className="text-gray-500 mb-3">Cofounder</h3>
+                    <h3 className="text-gray-500 mb-3">Founder</h3>
                     <p className="mb-4 max-w-sm">
                       I am a highly motivated and innovative individual with a deep passion for problem-solving. My academic journey in economics and computer science has honed my analytical thinking and interdisciplinary approach to challenges. Entrepreneurial by nature, I thrive on leading teams and developing solutions that drive positive change. With strong technical skills, I am always eager to explore new horizons and make a meaningful impact.
                     </p>
@@ -504,7 +494,14 @@ function InteractiveGraph() {
               </div>
               <div className='max-w-full'></div>
               <Button
-                type="submit"
+                type="submit" onClick={()=>{
+                  toast({
+                    variant: "success",
+                    title: "Connected",
+                    description:
+                      `You connected ${form.getValues().source} and ${form.getValues().target}`,
+                  });
+                }}
                 className="wifocus:ring-primary-300 w-min dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg text-center text-sm font-medium text-white focus:outline-none focus:ring-4">
                 Connect
               </Button>
