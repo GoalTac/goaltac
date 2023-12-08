@@ -2,10 +2,12 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuPortal, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from './../ui/dropdown-menu'
+import { useRouter } from 'next/router'
 
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false)
-
+  const router = useRouter()
   const trigger = useRef<HTMLButtonElement>(null)
   const mobileNav = useRef<HTMLDivElement>(null)
 
@@ -31,22 +33,35 @@ export default function MobileMenu() {
   })
 
   return (
-    <div className="flex md:hidden">
+    <div className="flex sm:hidden">
       {/* Hamburger button */}
-      <button
-        ref={trigger}
-        className={`hamburger ${mobileNavOpen && 'active'}`}
-        aria-controls="mobile-nav"
-        aria-expanded={mobileNavOpen}
-        onClick={() => setMobileNavOpen(!mobileNavOpen)}
-      >
-        <span className="sr-only">Menu</span>
-        <svg className="w-6 h-6 fill-current text-gray-900" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect y="4" width="24" height="2" />
-          <rect y="11" width="24" height="2" />
-          <rect y="18" width="24" height="2" />
-        </svg>
-      </button>
+      
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="cursor-pointer">
+          <svg className="w-6 h-6 fill-current text-gray-900" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect y="4" width="24" height="2" />
+            <rect y="11" width="24" height="2" />
+            <rect y="18" width="24" height="2" />
+          </svg>
+        </DropdownMenuTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Menu</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={()=>router.push('/about')} className="cursor-pointer">
+                About
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>router.push('/demo')} className="cursor-pointer">
+                Demo
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+              
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+        
+      </DropdownMenu>
+      
 
       {/*Mobile navigation 
       <div ref={mobileNav}>

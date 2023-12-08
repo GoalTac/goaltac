@@ -49,7 +49,7 @@ export default class Graph extends React.Component<Props, {}> {
 
     this.simulation.alphaTarget(0.1).restart()
 
-    return (<svg className="border border-8 bg-white rounded-md"
+    return (<svg className="border border-4 bg-white rounded-md"
         width={this.props.width} height={this.props.height}>
         <g>
             <Links links={this.props.graph.links} />

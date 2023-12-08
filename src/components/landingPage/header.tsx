@@ -30,29 +30,42 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           
           {/* Site branding */}
-          <div className="shrink-0 mr-4">
-            {!top ? <Image src="/name_logo.png"
-              width={80}
-              height={40}
-              className="h-auto w-auto"
-              alt="GoalTac Logo"/> : <Image src="/black_name_logo.png"
-              width={80}
-              height={40}
-              className="h-auto w-auto"
-              alt="GoalTac Logo"/> }
-          </div>
-
-          <div className='items-center flex-row hidden sm:flex'>
-              
-              <h3 className={!top ? 'bg-gradient-to-r from-blue-600 to-indigo-400 inline-block text-transparent bg-clip-text font-black' : 'text-black font-black'}>
-                <span>COMING SOON</span>
-              </h3>
-              <Image src="/rocket.svg"
-                width={60}
-                height={60}
-                className=""
-                alt="GoalTac Logo"/>
+          <div className="flex-row flex justify-center gap-16">
+            <div className="shrink-0 mr-4">
+              {!top ? <Image src="/name_logo.png" onClick={()=>router.push('/')}
+                width={80}
+                height={40}
+                className="h-auto w-auto cursor-pointer"
+                alt="GoalTac Logo"/> : <Image src="/black_name_logo.png"
+                width={80} onClick={()=>router.push('/')}
+                height={40}
+                className="h-auto w-auto cursor-pointer"
+                alt="GoalTac Logo"/> }
             </div>
+            <div className='flex-row hidden sm:flex my-auto gap-12'>
+              
+              <div className='hover:text-gray-700 text-black cursor-pointer font-black'>
+                <span onClick={()=>router.push('/demo')}>DEMO</span>
+              </div>
+
+              <div className='hover:text-gray-700 text-black cursor-pointer font-black'>
+                  <span onClick={()=>router.push('/about')}>ABOUT</span>
+              </div>
+            </div>
+            
+          </div>
+            
+          <div className='items-center flex-row hidden sm:flex'>
+            <h3 className={!top ? 'bg-gradient-to-r from-blue-600 to-indigo-400 inline-block text-transparent bg-clip-text font-black' : 'text-black font-black'}>
+              <span>COMING SOON</span>
+            </h3>
+            <Image src="/rocket.svg"
+              width={60}
+              height={60}
+              className=""
+              alt="GoalTac Logo"/>
+          </div>
+          
 
           {/* Desktop navigation 
           <nav className="hidden md:flex md:grow">
@@ -71,9 +84,9 @@ export default function Header() {
             </li>
             </ul>
 
-          </nav>
+          </nav>*/}
 
-          <MobileMenu />*/}
+          <MobileMenu />
 
         </div>
       </div>
